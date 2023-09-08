@@ -1,0 +1,43 @@
+---
+const { color, size, contents, image } = Astro.props;
+let width = size || 200;
+let height = size || 200;
+
+
+import svgDataCodes from './blobs.json';
+const randomBlob = () => {
+  const randomIndex = Math.floor(Math.random() * svgDataCodes.length);
+  return svgDataCodes[randomIndex];
+}
+---
+<div class="blob-container" style={"height: " + height + "px; width: " + width + "px;"}>
+  <div class="blob-content" >
+    { !image ?
+    <svg viewBox="0 0 200 200">
+    <defs>
+      <clipPath id="myPath" height={height} width={width}>
+        <path d={randomBlob()} transform="translate(100 100)" />
+      </clipPath>
+    </defs>
+    <rect x="0" y="0" height="100%" width="100%" clip-path="url(#myPath)" fill={color} >
+      <foreignObject width="100%" height="100%">
+        <div xmlns="http://www.w3.org/1999/xhtml">
+          <h1>Hello, SVG!</h1>
+        </div>
+      </foreignObject>
+    </rect>
+    </svg>
+:
+  <svg viewBox="0 0 200 200" width={width} height={height}>
+    <defs>
+      <clipPath id="myPath">
+        <path d={randomBlob()} transform="translate(100 100)" />
+      </clipPath>
+    </defs>
+    <image xlink:href={image} x="0" y="0" clip-path="url(#myPath)"
+            preserveAspectRatio="xMidYMid slice"
+            height="auto" width="100%" />
+  </svg>
+}
+  </div>
+</div>
