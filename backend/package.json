@@ -4,13 +4,14 @@
   "description": "At first id do a ME stack mongo express.js stack for simplicity, then with time it could be nice to migrate to bun.js and SQL",
   "main": "src/server.js",
   "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "dev": "nodemon server.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "nodemon": "^3.0.1"
   }
