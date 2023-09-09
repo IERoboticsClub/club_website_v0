@@ -2,13 +2,17 @@
 // import all teh markdown files in the current directory
 import getSortedPosts from '../../scripts/load-posts.js';
 const allPosts = getSortedPosts();
+// TODO maybe wrap in blog layout aswell
 ---
 <html title="Home">
-  <h2>Blog Posts</h2>
+  <h2 class="text-2xl">Blog Posts</h2>
   <ul>
     {allPosts.map((post) => (
       <li>
-        <a href={`/blog/${post.id}`}>{post.title}</a>
+        <a href={`/blog/${post.id}`} class="text-blue-500 hover:underline">
+          {post.title}
+          <span class="text-gray-500 text-sm"> - {post.date}</span>
+        </a>
       </li>
     ))}
   </ul>

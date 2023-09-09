@@ -7,7 +7,7 @@ const postsDirectory = path.join(process.cwd(), 'src/pages/blog/');
 function getSortedPosts() {
     // Get file names under /posts
     const fileNames = fs.readdirSync(postsDirectory);
-    const allPostsData = fileNames.map(fileName => {
+    let allPostsData = fileNames.map(fileName => {
         // Remove ".md" from file name to get id
         const id = fileName.replace(/\.md$/, '');
 
@@ -23,6 +23,11 @@ function getSortedPosts() {
             id,
             ...matterResult.data
         };
+    });
+    // remove all non markdown files
+    // filter out all non markdown files
+    allPostsData = allPostsData.filter((post) => {
+        return post.title !== undefined;
     });
     // Sort posts by date
     return allPostsData.sort((a, b) => {
