@@ -1,0 +1,15 @@
+---
+// import all teh markdown files in the current directory
+import getSortedPosts from '../../scripts/load-posts.js';
+const allPosts = getSortedPosts();
+---
+<html title="Home">
+  <h2>Blog Posts</h2>
+  <ul>
+    {allPosts.map((post) => (
+      <li>
+        <a href={`/blog/${post.id}`}>{post.title}</a>
+      </li>
+    ))}
+  </ul>
+</html>
