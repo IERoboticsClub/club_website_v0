@@ -9,7 +9,7 @@ const allPosts = getSortedPosts();
   <ul>
     {allPosts.map((post) => (
       <li>
-        <a href={`/blog/${post.id}`} class="text-blue-500 hover:underline">
+        <a href={`./blog/${post.id}`} class="text-blue-500 hover:underline">
           {post.title}
           <span class="text-gray-500 text-sm"> - {post.date}</span>
         </a>
