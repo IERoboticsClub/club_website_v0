@@ -1,0 +1,61 @@
+---
+const {frontmatter} = Astro.props;
+---
+<style is:global>
+@tailwind base;
+
+.blog {
+  @apply max-w-2xl mx-auto px-4;
+  a {
+    @apply text-blue-600 underline;
+  }
+  p {
+    @apply text-gray-700 my-4 leading-7 text-justify;
+  }
+  h1 {
+    @apply text-2xl text-blue-800;
+  }
+  h2 {
+    @apply text-xl;
+  }
+  h3 {
+    @apply text-lg;
+  }
+  h4 {
+    @apply text-base;
+  }
+
+}
+@tailwind components;
+@tailwind utilities;
+</style>
+<html lang='end'>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Astro description" />
+  <meta name="viewport" content="width=device-width" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="generator" content={Astro.generator} />
+  <title>{frontmatter.title}</title>
+</head>
+<body>
+  <header>
+  <!--   <h1 class="text-3xl text-blue-800"> -->
+  <!--     Blog | AI and Robotics Club<span class="text-lg text-gray-900">{frontmatter.title}</span> -->
+  <!--   </h1> -->
+  <h1 class="text-xl text-blue-800">
+    AI and Robotics Club
+  </h1>
+  </header>
+
+  <h1 class="text-4xl text-blue-800 text-center my-8">
+    {frontmatter.title}
+  </h1>
+  <main class="blog mt-8">
+    <slot />
+  </main>
+  <footer class="text-center text-gray-500 text-sm my-4">
+    <p>2023 AI and Robotics Club</p>
+  </footer>
+</body>
+</html>
