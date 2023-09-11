@@ -1,9 +1,35 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import MatrixBackground from '../components/MatrixBackground.astro';
 ---
 
 <Layout title="AI and Robotics Club">
-  <div>
-    <h1 class="text-3xl text-center">AI and Robotics Club</h1>
+  <div id="container">
+      <div id="matrix-bg" class="absolute align-top text-gray-300 top-0 left-0">
+        <MatrixBackground length=50 amplitude=10 period=10></MatrixBackground>
+      </div>
+      <h1 id="header" class="text-5xl text-center h-0">AI and Robotics Club</h1>
   </div>
 </Layout>
+<style>
+    #container {
+        width: 100%;
+        height: 1000px;
+        position: absolute;
+        overflow: hidden;
+    }
+    #matrix-bg {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        text: gray-300;
+    }
+    #header {
+        z-index: 10;
+        position: relative;
+        top: 100px;
+        height: 0px;
+    }
+</style>
