@@ -10,16 +10,12 @@ const { length, amplitude, period, offset } = Astro.props;
         <span id="period">{period}</span>
         <span id="offset">{offset}</span>
     </div>
-    <div id="dynamicElement">
+    <div id="matrixHeaderDE">
     </div>
 </pre>
 
 
-<script>
-
-    const paddString = (str, side, count) => {
-
-    }
+<script type="module">
     let { length, amplitude, period, offset } = ['length', 'amplitude', 'period', 'offset'].map((str) => {
         return document.getElementById(str);
     })
@@ -44,8 +40,8 @@ const { length, amplitude, period, offset } = Astro.props;
             string[y] += "\n";
         }
 
+        //TODO: make it single string instead of array
         return string;
-        //return turnTextSideways(string, length + amplitude);
     }
 
     const generateWaveAndUpdateElement = (elementId, initialOffset, delay) => {
@@ -66,6 +62,6 @@ const { length, amplitude, period, offset } = Astro.props;
         setTimeout(update, delay);
     };
 
-    generateWaveAndUpdateElement("dynamicElement", 0, 50);
+    generateWaveAndUpdateElement("matrixHeaderDE", 0, 50);
 
 </script>
