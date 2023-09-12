@@ -1,0 +1,21 @@
+---
+import { getStandalonePage } from "astronotion/api";
+import { NotionBlocks } from "astronotion/components";
+const { id } = Astro.params;
+
+
+export function getStaticPaths() {
+    const ids = [
+        "f9c05efa5325438ea7f18fe082d98312"
+    ];
+    return ids.map((id) => ({ params: { id } }));
+}
+
+
+const pageData = await getStandalonePage(id);
+console.log(pageData);
+const { title, icon, contents, created } = pageData;
+---
+<h1>{title}</h1>
+
+<NotionBlocks data={contents} />
