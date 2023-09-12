@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --experimental-integrations",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
@@ -12,7 +12,14 @@
   "dependencies": {
     "@astrojs/tailwind": "^5.0.0",
     "astro": "^3.0.10",
+    "astro-embed": "^0.5.1",
+    "astro-imagetools": "^0.9.0",
+    "astro-xelement": "^3.2.0",
     "gray-matter": "^4.0.3",
+    "notion-client": "^6.16.0",
     "tailwindcss": "^3.3.3"
+  },
+  "devDependencies": {
+    "astronotion": "^0.0.7"
   }
 }
