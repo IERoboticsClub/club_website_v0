@@ -1,0 +1,75 @@
+---
+const { length, amplitude, period, offset } = Astro.props;
+// get the params, pass them to the rendered dom
+---
+
+<pre id="word_cloud">
+    <div id="wordCloudDE">
+    </div>
+</pre>
+
+
+<script>
+    let { length, amplitude, period, offset } = ['length', 'amplitude', 'period', 'offset'].map((str) => {
+        return document.getElementById(str);
+    })
+    // a bit of a hack, sadly
+    // since pre-rendered in the dom and we want to updates constantly
+
+    const chars = `abcdefghijklmnopqrstuvwxzABCDEFGHIJKLMNOPQRSTUVWZ1234567890!@#$%^&*()_+-=`;
+
+    function randomChar(){
+        return chars[Math.floor(Math.random() * (chars.length - 1))];
+    }
+
+    function generateCloudMatrix(width, height){
+        let string = "";
+        for(let y = 0; y < height; y++){
+            for(let x = 0; x < width; x++) string += randomChar();
+            string += "\n";
+        }
+
+        return string;
+    }
+
+    let words = "";
+
+    function isSpaceFree(word, pos, boundx, boundy){
+        let y = 0; //fix later
+        for(let x = pos[0]; x < word.string.length; x ++)
+            if(words[y][x] != " ") return false;
+        return true;
+    }
+
+    class Word{
+        constructor (string, boundx, boundy){
+            let word = string;
+            let position = [-1];
+            while (position[0] == -1 || isSpaceFree(word, position, boundx, boundy)){
+                position = [Math.floor(Math.random() * (boundx - 1)), Math.floor(Math.random() * (boundy - 1))]
+            }
+        }
+    }
+
+    function generateCloudWord(width, height, words){
+        width /= 2;
+        height /= 2;
+
+
+    }
+
+    const generateCloudAndUpdateElement = (elementId, delay) => {
+        const element = document.getElementById(elementId);
+
+        const update = () => {
+            const wave = generateCloudMatrix(200, 15);
+            element.innerText = wave.toString();
+            setTimeout(update, delay);
+        };
+
+        setTimeout(update, delay);
+    };
+
+    generateCloudAndUpdateElement("wordCloudDE", 50);
+
+</script>
