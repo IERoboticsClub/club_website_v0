@@ -1,0 +1,24 @@
+name: Push to Prod
+
+on:
+  push:
+    branches:
+      - prod
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v2
+
+      - name: Configure Git
+        run: |
+          git config user.name "Daniel Rosel"
+          git config user.email "daniel@alves.world"
+
+      - name: Push to target repository
+        run: |
+          git remote add target-repo https://github.com/velocitatem/club-website
+          git push target-repo prod
