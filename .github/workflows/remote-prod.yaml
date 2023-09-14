@@ -17,18 +17,9 @@ jobs:
         run: |
           git config user.name "Daniel Rosel"
           git config user.email "daniel@alves.world"
-          echo "Git configuration completed."
 
-      - name: Set up Git credentials
-        run: |
-          echo "Setting up Git credentials..."
-          echo "machine github.com login github-actions[bot] password=${{ secrets.TARGET_REPO_TOKEN }}" > ~/.netrc
-          git config --global credential.helper 'store --file ~/.git-credentials'
-          echo "Git credentials configured."
 
       - name: Push to target repository
         run: |
-          git remote add target-repo https://github.com/velocitatem/club-website.git
-          echo "Added remote 'target-repo'."
+          git remote add target-repo https://$TARGET_REPO_TOKEN@github.com/velocitatem/club-website.git
           git push target-repo prod
-          echo "Pushed to 'prod' branch in target repository."
