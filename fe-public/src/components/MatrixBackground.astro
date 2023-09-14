@@ -1,0 +1,71 @@
+---
+const { length, amplitude, period, offset } = Astro.props;
+// get the params, pass them to the rendered dom
+---
+
+<pre id="header_block" class="">
+    <div class="hidden h-0">
+        <span id="length">{length}</span>
+        <span id="amplitude">{amplitude}</span>
+        <span id="period">{period}</span>
+        <span id="offset">{offset}</span>
+    </div>
+    <div id="dynamicElement">
+    </div>
+</pre>
+
+
+<script>
+
+    const paddString = (str, side, count) => {
+
+    }
+    let { length, amplitude, period, offset } = ['length', 'amplitude', 'period', 'offset'].map((str) => {
+        return document.getElementById(str);
+    })
+    // a bit of a hack, sadly
+    // since pre-rendered in the dom and we want to updates constantly
+
+    const chars = `abcdefghijklmnopqrstuvwxzABCDEFGHIJKLMNOPQRSTUVWZ1234567890!@#$%^&*()_+-=`;
+
+    function randomChar(){
+        return chars[Math.floor(Math.random() * (chars.length - 1))];
+    }
+
+    function generateWave(size, length, amplitude, period, offset){
+        let string = [length + amplitude];
+        for(let y = 0; y < length + amplitude*2; y++){
+            string[y] = "";
+            for(let x = 0; x < size; x++){
+                let tLen = length + amplitude * Math.sin((x + offset)/period) + Math.sin((x + offset/2)/(period*1.5)) * amplitude/2 + Math.sin((x + offset/3)/(period*2)) * amplitude/2;
+                if(y >= tLen) string[y] += " ";
+                else string[y] += randomChar();
+            }
+            string[y] += "\n";
+        }
+
+        return string;
+        //return turnTextSideways(string, length + amplitude);
+    }
+
+    const generateWaveAndUpdateElement = (elementId, initialOffset, delay) => {
+        let offset = initialOffset;
+        const element = document.getElementById(elementId);
+
+        length = 15;
+        amplitude = 5;
+        period = 40;
+        const update = () => {
+            const wave = generateWave(200, length, amplitude, period, offset);
+            element.innerText = wave.toString();
+            const goofyPeriodMultiplier = 12; //DO NOT CHANGE THIS OR SIN FUNCTION
+            offset = (offset + 1) % (period * goofyPeriodMultiplier * 3.14);
+            setTimeout(update, delay);
+        };
+
+        setTimeout(update, delay);
+    };
+
+    generateWaveAndUpdateElement("dynamicElement", 0, 50);
+
+</script>
