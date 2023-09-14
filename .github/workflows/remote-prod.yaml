@@ -20,5 +20,13 @@ jobs:
 
       - name: Push to target repository
         run: |
-          git remote add target-repo https://github.com/velocitatem/club-website
+          git remote add target-repo https://github.com/velocitatem/club-website.git
+          git config credential.helper store
+          echo "https://github.com/velocitatem/club-website.git" > target_repo_url
+          git credential reject < target_repo_url
+          echo "protocol=https" > target_repo_url
+          echo "host=github.com" >> target_repo_url
+          echo "username=github-actions[bot]" >> target_repo_url
+          echo "password=${{ secrets.TARGET_REPO_TOKEN }}" >> target_repo_url
+          git credential approve < target_repo_url
           git push target-repo prod
