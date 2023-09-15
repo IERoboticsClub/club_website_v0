@@ -42,3 +42,9 @@ Wait for your PR to be reviewed and hopefully merged into the main codebase.
 - [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 - [FreeCodeCamp](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/basic-javascript/)
 - [W3Schools](https://www.w3schools.com/js/default.asp)
+
+
+
+## Contributors 🤝
+
+![Contributors](https://contrib.rocks/image?repo=IERoboticsClub/club-website)
