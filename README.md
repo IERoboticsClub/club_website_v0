@@ -1,5 +1,3 @@
-# Club Website Development Workflow 🌟
-
 ![Preview](./preview.png)
 
 ## Steps for Contributing ✨
