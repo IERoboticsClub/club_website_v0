@@ -26,3 +26,5 @@ jobs:
           ssh-add id_rsa
           git remote add club-website git@github.com:velocitatem/club-website.git
           git push repoB ${{ github.ref }}
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
