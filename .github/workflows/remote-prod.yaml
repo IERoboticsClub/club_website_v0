@@ -1,4 +1,4 @@
-name: Push to Prod
+name: Sync to Fork (Repo B)
 
 on:
   push:
@@ -6,20 +6,23 @@ on:
       - prod
 
 jobs:
-  push:
+  sync:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout source repository
+      - name: Checkout Repo A
         uses: actions/checkout@v2
 
-      - name: Configure Git
+      - name: Set up SSH
         run: |
-          git config user.name "Daniel Rosel"
-          git config user.email "daniel@alves.world"
+          echo "${{ secrets.SSH_KEY }}" > id_rsa
+          chmod 600 id_rsa
+          ssh-keyscan github.com >> known_hosts
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
 
-
-      - name: Push to target repository
+      - name: Sync Branches
         run: |
-          git remote add target-repo https://$TARGET_REPO_TOKEN@github.com/velocitatem/club-website.git
-          git push target-repo prod
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add id_rsa
+          git remote add club-website git@github.com:velocitatem/club-website.git
+          git push repoB ${{ github.ref }}
