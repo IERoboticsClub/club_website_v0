@@ -1,5 +1,7 @@
 # Club Website Development Workflow 🌟
 
+![Preview](./preview.png)
+
 ## Steps for Contributing ✨
 
 ### 1. Fork the Repository 🍴
