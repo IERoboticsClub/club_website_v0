@@ -32,9 +32,6 @@ Wait for your PR to be reviewed and hopefully merged into the main codebase.
 - [GitHub Learning Lab](https://lab.github.com/)
 - [GitHub Desktop](https://desktop.github.com/)
 - [GitKraken](https://www.gitkraken.com/)
-- [Emacs](https://www.gnu.org/software/emacs/)
-- [Magit](https://magit.vc/)
-- [Vim](https://www.vim.org/)
 
 ### Javascript
 - [JavaScript Cheat Sheet](https://websitesetup.org/javascript-cheat-sheet/)
