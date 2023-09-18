@@ -2,8 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import MatrixBackground from '../components/MatrixBackground.astro';
 import WordCloud from "../components/WordCloud.astro";
+import Scoreboard from "../components/Scoreboard.astro";
 
-const cloudWords = ["AI", "ROBOTICS", "PROGRAMMING"];
 ---
 
 <Layout title="AI and Robotics Club">
@@ -12,6 +12,9 @@ const cloudWords = ["AI", "ROBOTICS", "PROGRAMMING"];
             <MatrixBackground></MatrixBackground>
         </div>
         <h1 id="header" class="text-5xl text-center h-0">AI and Robotics Club</h1>
+    </div>
+    <div>
+        <Scoreboard></Scoreboard>
     </div>
     <div>
         <WordCloud></WordCloud>

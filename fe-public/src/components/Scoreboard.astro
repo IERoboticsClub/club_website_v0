@@ -1,0 +1,69 @@
+---
+const maxCommits = 2000;
+
+let users = [
+    {
+        username: 'velocitatem',
+        id: 60182044,
+        date: '2023-09-18T15:24:03.223Z',
+        followers: 15,
+        commits: 1536,
+        pull_requests: 177,
+        stars: 62,
+        following: 30,
+        public_repos: 30,
+        public_gists: 21,
+        diff: 20
+    }
+];
+---
+
+<div style="text-align: center;"><h2>Github Rankings</h2></div>
+<table class="center">
+    <tr>
+        <th>USER</th>
+        <th>CONTRIBUTIONS</th>
+        <th>PAST 24hr</th>
+    </tr>
+    <tr>
+        <td>Sample user</td>
+        <td>12345</td>
+        <td style="text-align: center;">123</td>
+    </tr>
+    <tbody>
+    {users.map((user) => (
+            <tr>
+                <td>
+                    <div style="text-align: center;">
+                        <img src={"https://avatars.githubusercontent.com/u/" + user.id} alt={user.username + " icon"} id="user-icon" class="center" width="50">
+                        <a href={"https://github.com/" + user.username} target="_blank">{user.username}</a>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <div>
+                            <progress value={user.commits} max={maxCommits}></progress>
+                        </div>
+                        <div>
+                            {"C:" + user.commits + " P:" + user.pull_requests}
+                        </div>
+
+                    </div>
+                </td>
+                <td style="text-align: center;">{user.diff}</td>
+            </tr>
+    ))}
+    </tbody>
+</table>
+<style>
+    table, th, td {
+        border: 1px solid black;
+    }
+    .center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #user-icon{
+        border-radius: 50%;
+    }
+</style>
