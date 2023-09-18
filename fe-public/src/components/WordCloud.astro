@@ -8,6 +8,14 @@
 <style>
     #wordCloudWords{
         font-size: 32px;
+        position: absolute;
+        line-height:32px;
+    }
+    #wordCloudDE{
+        font-size: 16px;
+        position: relative;
+        top:-24px;
+        line-height: 16px;
     }
 </style>
 
@@ -15,9 +23,9 @@
 <script>
     const chars = `abcdefghijklmnopqrstuvwxzABCDEFGHIJKLMNOPQRSTUVWZ1234567890!@#$%^&*()_+-=`;
 
-    const width = 25;
-    const height = 8;
-    const words = ["AI"];
+    const width = 70;
+    const height = 15;
+    const words = ["AI", "ROBOTICS", "CODE", "IE", "MACHINE LEARNING", "CODE", "FUTURE"];
 
     let wordText = "";
 
@@ -52,23 +60,15 @@
 
     function generateCloudWords(elementId){
         wordText = "";
-        for(let i = 0; i < height; i++) wordText += "\n".padStart(width+2, "0");
+        for(let i = 0; i < height; i++) wordText += "\n".padStart(width+2, " ");
 
         for(let i = 0; i < words.length; i ++){
             let word = new Word(words[i], width, height, 0.2);
-            word.position = [0,0];
+            //word.position = [0,0];
             wordText = wordText.substring(0, posToStringIndex(word.position, width)) +
                 word.value +
                 wordText.substring(posToStringIndex(word.position, width) + word.value.length);
         }
-
-        /*wordText = "";
-        for(let y = 0; y < height; y++) {
-            for (let x = 0; x < width; x++) {
-                wordText += posToStringIndex([x,y], width)
-            }
-        }*/
-
 
         const element = document.getElementById(elementId);
         element.innerText = wordText;
@@ -78,12 +78,8 @@
         let string = "";
         for(let y = 0; y < height; y++){
             for(let x = 0; x < width; x++){
-
-                string += Math.floor(x + y * (width+2)) + " ";
-                continue;
-
-                if(wordText[posToStringIndex([x/2, y/2], width/2)] == "0") string += randomChar();
-                else string += "0";
+                if(wordText[posToStringIndex([x/2, Math.floor(y/2)], width/2)] == " ") string += randomChar();
+                else string += " ";
             }
             string += "\n";
         }
@@ -95,7 +91,6 @@
 
         const update = () => {
             const cloud = generateCloudMatrix(width*2, height*2);
-            //const cloud = generateCloudWords("");
             element.innerText = cloud.toString();
             setTimeout(update, delay);
         };
