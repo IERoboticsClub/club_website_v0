@@ -1,21 +1,58 @@
 const express = require('express');
 const cors = require('cors');
 const { Client } = require("@notionhq/client")
+// import mongodb from 'mongodb';
+const mongodb = require('mongodb');
 
 const app = express();
 const routes = require('./router');
-
+require('dotenv').config()
 
 app.use(cors());
 
-let dependencyContainer = {}
+let dependencies = {}
 const notion = new Client({
     auth: process.env.NOTION_TOKEN,
 })
-dependencyContainer.notion = notion;
+
+// non-concurrent connect to the database
+const mongoClient = new mongodb.MongoClient(process.env.MONGO_URL);
+
+try {
+    mongoClient.connect();
+    dependencies.mongo = mongoClient
+    dependencies.useMongo = (callback) => {
+        // make sure we are connected to the database before we do anything
+        if (mongoClient.isConnected()) {
+            callback(mongoClient);
+        }
+        else {
+            mongoClient.connect(() => {
+                callback(mongoClient);
+            });
+        }
+    }
+
+    console.log("DB")
+}
+catch (err) {
+    console.log(err);
+}
+
+
+
+
+dependencies.notion = notion;
+dependencies.ls = [
+    'notion',
+    'mongo'
+]
+
+console.log('Dependencies:');
+console.log(dependencies);
 
 app.use((req, res, next) => {
-    req.dependencyContainer = dependencyContainer;
+    req.dependencies = dependencies;
     next();
 });
 
@@ -24,7 +61,8 @@ routes.forEach((route) => {
         console.log(`Adding route: ${route.method} ${route.path}`);
         // DOC route: path, method, scope, handler
         if (route.scope == 'public') { // for now we use this (no internal yet)
-            app[route.method.toLowerCase()](route.path, route.handler);
+            // make sure that the body is also passed to the handler
+            app[route.method.toLowerCase()](route.path, route.handler).use(express.json()); // for parsing application/json
         } else {
             app[route.method.toLowerCase()](route.path, (req, res, next) => {
                 // TODO implement authentication middleware
@@ -39,6 +77,9 @@ routes.forEach((route) => {
     };
 });
 
-app.listen(3000, () => {
+
+
+
+const server = app.listen(3000, () => {
     console.log('Example app listening on port 3000!');
 });

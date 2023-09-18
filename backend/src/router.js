@@ -6,7 +6,14 @@ let routes = [
         scope: 'public',
         handler: (request, res) => {
             res.json({
-                status: 'OK'
+                status: 'OK',
+                dependencies: request.dependencies.ls.map((dep) => {
+                    return {
+                        name: dep,
+                        status: request.dependencies[dep] ? 'OK' : 'ERROR'
+                    }
+                })
+
             })
         }
     }

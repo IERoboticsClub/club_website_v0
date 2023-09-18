@@ -8,10 +8,5 @@ module.exports.accounts = [
                 status: 'OK'
             })
         }
-    },
-    {
-        "path": "/ranking",
-        "method": "GET",
-        "scope": "public"
     }
 ];
