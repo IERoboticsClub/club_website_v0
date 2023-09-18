@@ -16,6 +16,7 @@
         position: relative;
         top:-24px;
         line-height: 16px;
+        color: #d1d5db;
     }
 </style>
 
@@ -25,7 +26,7 @@
 
     const width = 70;
     const height = 15;
-    const words = ["AI", "ROBOTICS", "CODE", "IE", "MACHINE LEARNING", "CODE", "FUTURE"];
+    const words = ["AI", "ROBOTICS", "CODE", "IEU", "MACHINE-LEARNING", "ALGORITHMS", "TECH"];
 
     let wordText = "";
 
@@ -37,24 +38,36 @@
         return Math.floor(pos[0] + pos[1] * (width+2));
     }
 
-    function isSpaceFree(word, pos, boundx){
-        if(pos[0] + word.length > boundx) return false;
+    function isSpaceFree(word, pos, boundx, buffer=0){
+        if(pos[0] + buffer < 0 || pos[0] + word.toString().length + buffer > boundx) return false;
 
-        for(let x = pos[0]; x < word.length; x ++)
-            if(wordText[posToStringIndex([x, pos[1]], width)] != " ") return false;
+        for(let x = -buffer; x < word.toString().length + buffer; x ++)
+            if (wordText[posToStringIndex([x + pos[0], pos[1]], width)] != " ")
+                return false;
+
         return true;
+    }
+
+    //Thank you stackoverflow.com/users/4975772/joshuakcockrell
+    function gaus() {
+        let u = 0, v = 0;
+        while(u === 0) u = Math.random(); //Converting [0,1) to (0,1)
+        while(v === 0) v = Math.random();
+        let num = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
+        num = num / 10.0 + 0.5; // Translate to 0 -> 1
+        if (num > 1 || num < 0) return gaus() // resample between 0 and 1
+        return num
     }
 
     class Word{
         value;
         position;
-        constructor (string, boundx, boundy, buffer){
+        constructor (string, boundx, boundy){
             this.value = string;
-            this.position = [-1];
-            while (this.position[0] == -1 || !isSpaceFree(this.value, this.position, boundx)){
-                this.position = [Math.floor(boundx*buffer + Math.random() * (boundx - boundx*buffer - 1)),
-                    Math.floor(boundy*buffer + Math.random() * (boundy - boundy*buffer - 1))]
-            }
+            do {
+                this.position = [Math.floor(gaus()*boundx - this.value.length/2),
+                    Math.floor(gaus()*boundy)]
+            } while (!isSpaceFree(this.value, this.position, boundx, 2));
         }
     }
 
@@ -63,8 +76,8 @@
         for(let i = 0; i < height; i++) wordText += "\n".padStart(width+2, " ");
 
         for(let i = 0; i < words.length; i ++){
-            let word = new Word(words[i], width, height, 0.2);
-            //word.position = [0,0];
+            let word = new Word(words[i], width, height);
+
             wordText = wordText.substring(0, posToStringIndex(word.position, width)) +
                 word.value +
                 wordText.substring(posToStringIndex(word.position, width) + word.value.length);
@@ -74,11 +87,13 @@
         element.innerText = wordText;
     }
 
-    function generateCloudMatrix(width, height){
+    function generateCloudMatrix(width, height, gausBlur){
         let string = "";
         for(let y = 0; y < height; y++){
             for(let x = 0; x < width; x++){
-                if(wordText[posToStringIndex([x/2, Math.floor(y/2)], width/2)] == " ") string += randomChar();
+                let xb = 1 - Math.abs(x-width/2)/(width/2) * gaus();
+                let yb = 1 - Math.abs(y-height/2)/(height/2) * gaus();
+                if((xb * yb) > gausBlur && wordText[posToStringIndex([x/2, Math.floor(y/2)], width/2)] == " ") string += randomChar();
                 else string += " ";
             }
             string += "\n";
@@ -90,7 +105,7 @@
         const element = document.getElementById(elementId);
 
         const update = () => {
-            const cloud = generateCloudMatrix(width*2, height*2);
+            const cloud = generateCloudMatrix(width*2, height*2, 0.5);
             element.innerText = cloud.toString();
             setTimeout(update, delay);
         };
