@@ -24,9 +24,11 @@
 <script>
     const chars = `abcdefghijklmnopqrstuvwxzABCDEFGHIJKLMNOPQRSTUVWZ1234567890!@#$%^&*()_+-=`;
 
-    const width = 70;
-    const height = 15;
+    const width = 85;
+    const height = 25;
     const words = ["AI", "ROBOTICS", "CODE", "IEU", "MACHINE-LEARNING", "ALGORITHMS", "TECH"];
+
+    const blur = 0.15;
 
     let wordText = "";
 
@@ -87,13 +89,12 @@
         element.innerText = wordText;
     }
 
-    function generateCloudMatrix(width, height, gausBlur){
+    function generateCloudMatrix(width, height){
         let string = "";
         for(let y = 0; y < height; y++){
             for(let x = 0; x < width; x++){
-                let xb = 1 - Math.abs(x-width/2)/(width/2) * gaus();
-                let yb = 1 - Math.abs(y-height/2)/(height/2) * gaus();
-                if((xb * yb) > gausBlur && wordText[posToStringIndex([x/2, Math.floor(y/2)], width/2)] == " ") string += randomChar();
+                let b = 1 - Math.sqrt(Math.pow((x-width/2)/(width/2), 2) + Math.pow((y-height/2)/(height/2), 2));
+                if(b * gaus() > blur && wordText[posToStringIndex([x/2, Math.floor(y/2)], width/2)] == " ") string += randomChar();
                 else string += " ";
             }
             string += "\n";
@@ -105,7 +106,7 @@
         const element = document.getElementById(elementId);
 
         const update = () => {
-            const cloud = generateCloudMatrix(width*2, height*2, 0.5);
+            const cloud = generateCloudMatrix(width*2, height*2);
             element.innerText = cloud.toString();
             setTimeout(update, delay);
         };
