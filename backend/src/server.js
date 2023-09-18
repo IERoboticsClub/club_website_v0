@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const { Client } = require("@notionhq/client")
 // import mongodb from 'mongodb';
-const mongodb = require('mongodb');
+const { MongoClient } = require('mongodb');
 
 const app = express();
 const routes = require('./router');
@@ -15,8 +15,11 @@ const notion = new Client({
     auth: process.env.NOTION_TOKEN,
 })
 
-// non-concurrent connect to the database
-const mongoClient = new mongodb.MongoClient(process.env.MONGO_URL);
+const mongoClient = MongoClient(process.env.MONGO_URL, () =>{
+    console.log("Connected successfully to server");
+    const db = mongoClient.db(process.env.MONGO_DB);
+    return db;
+});
 
 try {
     mongoClient.connect();
