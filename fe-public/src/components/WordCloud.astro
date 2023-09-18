@@ -1,75 +1,109 @@
 ---
-const { length, amplitude, period, offset } = Astro.props;
-// get the params, pass them to the rendered dom
 ---
 
 <pre id="word_cloud">
-    <div id="wordCloudDE">
-    </div>
+    <div id="wordCloudWords"></div>
+    <div id="wordCloudDE"></div>
 </pre>
+<style>
+    #wordCloudWords{
+        font-size: 32px;
+    }
+</style>
 
 
 <script>
-    let { length, amplitude, period, offset } = ['length', 'amplitude', 'period', 'offset'].map((str) => {
-        return document.getElementById(str);
-    })
-    // a bit of a hack, sadly
-    // since pre-rendered in the dom and we want to updates constantly
-
     const chars = `abcdefghijklmnopqrstuvwxzABCDEFGHIJKLMNOPQRSTUVWZ1234567890!@#$%^&*()_+-=`;
+
+    const width = 25;
+    const height = 8;
+    const words = ["AI"];
+
+    let wordText = "";
 
     function randomChar(){
         return chars[Math.floor(Math.random() * (chars.length - 1))];
     }
 
-    function generateCloudMatrix(width, height){
-        let string = "";
-        for(let y = 0; y < height; y++){
-            for(let x = 0; x < width; x++) string += randomChar();
-            string += "\n";
-        }
-
-        return string;
+    function posToStringIndex(pos, width){
+        return Math.floor(pos[0] + pos[1] * (width+2));
     }
 
-    let words = "";
+    function isSpaceFree(word, pos, boundx){
+        if(pos[0] + word.length > boundx) return false;
 
-    function isSpaceFree(word, pos, boundx, boundy){
-        let y = 0; //fix later
-        for(let x = pos[0]; x < word.string.length; x ++)
-            if(words[y][x] != " ") return false;
+        for(let x = pos[0]; x < word.length; x ++)
+            if(wordText[posToStringIndex([x, pos[1]], width)] != " ") return false;
         return true;
     }
 
     class Word{
-        constructor (string, boundx, boundy){
-            let word = string;
-            let position = [-1];
-            while (position[0] == -1 || isSpaceFree(word, position, boundx, boundy)){
-                position = [Math.floor(Math.random() * (boundx - 1)), Math.floor(Math.random() * (boundy - 1))]
+        value;
+        position;
+        constructor (string, boundx, boundy, buffer){
+            this.value = string;
+            this.position = [-1];
+            while (this.position[0] == -1 || !isSpaceFree(this.value, this.position, boundx)){
+                this.position = [Math.floor(boundx*buffer + Math.random() * (boundx - boundx*buffer - 1)),
+                    Math.floor(boundy*buffer + Math.random() * (boundy - boundy*buffer - 1))]
             }
         }
     }
 
-    function generateCloudWord(width, height, words){
-        width /= 2;
-        height /= 2;
+    function generateCloudWords(elementId){
+        wordText = "";
+        for(let i = 0; i < height; i++) wordText += "\n".padStart(width+2, "0");
+
+        for(let i = 0; i < words.length; i ++){
+            let word = new Word(words[i], width, height, 0.2);
+            word.position = [0,0];
+            wordText = wordText.substring(0, posToStringIndex(word.position, width)) +
+                word.value +
+                wordText.substring(posToStringIndex(word.position, width) + word.value.length);
+        }
+
+        /*wordText = "";
+        for(let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
+                wordText += posToStringIndex([x,y], width)
+            }
+        }*/
 
 
+        const element = document.getElementById(elementId);
+        element.innerText = wordText;
+    }
+
+    function generateCloudMatrix(width, height){
+        let string = "";
+        for(let y = 0; y < height; y++){
+            for(let x = 0; x < width; x++){
+
+                string += Math.floor(x + y * (width+2)) + " ";
+                continue;
+
+                if(wordText[posToStringIndex([x/2, y/2], width/2)] == "0") string += randomChar();
+                else string += "0";
+            }
+            string += "\n";
+        }
+        return string;
     }
 
     const generateCloudAndUpdateElement = (elementId, delay) => {
         const element = document.getElementById(elementId);
 
         const update = () => {
-            const wave = generateCloudMatrix(200, 15);
-            element.innerText = wave.toString();
+            const cloud = generateCloudMatrix(width*2, height*2);
+            //const cloud = generateCloudWords("");
+            element.innerText = cloud.toString();
             setTimeout(update, delay);
         };
 
         setTimeout(update, delay);
     };
 
+    generateCloudWords("wordCloudWords");
     generateCloudAndUpdateElement("wordCloudDE", 50);
 
 </script>
