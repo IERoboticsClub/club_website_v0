@@ -10,10 +10,12 @@ require('dotenv').config()
 
 app.use(cors());
 
-let dependencies = {}
-const notion = new Client({
-    auth: process.env.NOTION_TOKEN,
-})
+let dependencies = {
+    notion: new Client({ auth: process.env.NOTION_TOKEN }),
+    mongo: null,
+    ls: [ 'notion', 'mongo' ]
+}
+
 
 const client = new MongoClient(process.env.MONGO_URL, {
 });
@@ -26,16 +28,11 @@ async function connectDB(next) {
     console.log("Connected successfully to server");
     await client.db("admin").command({ ping: 1 });
     dependencies.mongo = client;
-    client.close();
+    client.close(); // we close the connection because we don't need it anymore :ignore
     next();
 }
 
 
-dependencies.notion = notion;
-dependencies.ls = [
-    'notion',
-    'mongo'
-]
 
 async function registerRoutes(next) {
 
