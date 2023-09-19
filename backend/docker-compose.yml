@@ -8,4 +8,13 @@ services:
       - .:/usr/src/app
     environment:
       - NODE_ENV=development
+    # install packages
+    command: npm install
     command: npm start
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
