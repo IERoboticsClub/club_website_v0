@@ -39,6 +39,7 @@ dependencies.ls = [
 
 async function registerRoutes(next) {
 
+    app.use(express.json());
     app.use((req, res, next) => {
         req.dependencies = dependencies;
         next();
@@ -50,7 +51,7 @@ async function registerRoutes(next) {
             // DOC route: path, method, scope, handler
             if (route.scope == 'public') { // for now we use this (no internal yet)
                 // make sure that the body is also passed to the handler
-                app[route.method.toLowerCase()](route.path, route.handler).use(express.json()); // for parsing application/json
+                app[route.method.toLowerCase()](route.path, route.handler)
             } else {
                 app[route.method.toLowerCase()](route.path, (req, res, next) => {
                     // TODO implement authentication middleware
