@@ -75,9 +75,6 @@ module.exports.github = [
                 }
                 return { username: user._id, diff: diff };
             });
-            // close the connection
-
-
             await mongo.close();
             res.json(result);
         }
