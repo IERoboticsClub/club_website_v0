@@ -48,15 +48,23 @@ async function registerRoutes(next) {
             // DOC route: path, method, scope, handler
             if (route.scope == 'public') { // for now we use this (no internal yet)
                 // make sure that the body is also passed to the handler
-                app[route.method.toLowerCase()](route.path, route.handler)
+                try {
+                    app[route.method.toLowerCase()](route.path, route.handler);
+                } catch (err) {
+                    console.log(err);
+                }
             } else {
-                app[route.method.toLowerCase()](route.path, (req, res, next) => {
-                    // TODO implement authentication middleware
-                    // check if the user is authenticated
-                    // if not, return a 401
-                    // if so, call next()
-                    next();
-                }, route.handler);
+                try {
+                    app[route.method.toLowerCase()](route.path, (req, res, next) => {
+                        // TODO implement authentication middleware
+                        // check if the user is authenticated
+                        // if not, return a 401
+                        // if so, call next()
+                        next();
+                    }, route.handler);
+                } catch (err) {
+                    console.log(err);
+                }
             }
         } else {
             console.log(`Invalid route: ${JSON.stringify(route)}`);

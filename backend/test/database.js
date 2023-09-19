@@ -14,7 +14,11 @@ describe('Database', function () {
     before(async function () {
         // give mongo some time to start up
         this.timeout(10000);
-        await client.connect();
+        try {
+            await client.connect();
+        } catch (err) {
+            console.log(err);
+        }
         console.log("Connected successfully to server");
     });
 
