@@ -74,10 +74,11 @@ async function registerRoutes(next) {
 }
 
 
+let port = process.env.PORT || 3000;
 connectDB(() => {
     registerRoutes(() => {
         console.log('Routes registered');
-        const server = app.listen(3000, () => {
+        const server = app.listen(port, () => {
             console.log('Example app listening on port 3000!');
         });
     });
