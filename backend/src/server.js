@@ -79,7 +79,7 @@ connectDB(() => {
     registerRoutes(() => {
         console.log('Routes registered');
         const server = app.listen(port, () => {
-            console.log('Example app listening on port 3000!');
+            console.log('Example app listening on port ' + port);
         });
     });
 });

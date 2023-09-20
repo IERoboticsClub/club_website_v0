@@ -1,6 +1,16 @@
 
 let routes = [
     {
+        path: '/',
+        method: 'GET',
+        scope: 'public',
+        handler: (request, res) => {
+            res.json({
+                message: '/api/v1'
+            })
+        }
+    },
+    {
         path: '/status',
         method: 'GET',
         scope: 'public',
