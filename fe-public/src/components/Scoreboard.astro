@@ -1,5 +1,7 @@
 ---
-const maxCommits = 2000;
+import getSortedPosts from "../scripts/load-posts";
+
+let averageCommitContent = 0;
 
 let users = [
     {
@@ -16,6 +18,19 @@ let users = [
         diff: 20
     },
     {
+        username: 'i-be-keggles',
+        id: 50220226,
+        date: '2023-09-18T15:24:03.223Z',
+        followers: 1,
+        commits: 26,
+        pull_requests: 4,
+        stars: 0,
+        following: 2,
+        public_repos: 5,
+        public_gists: 0,
+        diff: 3
+    },
+    {
         username: 'dsanmart',
         id: 92187824,
         date: '2023-09-18T15:24:03.223Z',
@@ -28,20 +43,24 @@ let users = [
         public_gists: 0,
         diff: 10
     },
-    {
-        username: 'i-be-keggles',
-        id: 50220226,
-        date: '2023-09-18T15:24:03.223Z',
-        followers: 1,
-        commits: 26,
-        pull_requests: 4,
-        stars: 0,
-        following: 2,
-        public_repos: 5,
-        public_gists: 0,
-        diff: 3
-    }
 ];
+
+function rawScore(c, pr){
+    const commitMultiplier = 1;
+    const prMultiplier = 3.5 ;
+    return c * commitMultiplier + pr * prMultiplier;
+}
+function score(c, pr, uc, up){
+    return (1 + rawScore(c,pr)/rawScore(uc, up))/2.0;
+}
+
+function compareUsers(a, b){
+    let as = rawScore(a.commits, a.pull_requests);
+    let bs = rawScore(b.commits, b.pull_requests);
+
+    return as < bs? 1 : as == bs? 0 : -1;
+}
+users.sort(compareUsers);
 ---
 
 <div style="text-align: center;"><h2>Github Rankings</h2></div>
@@ -50,11 +69,6 @@ let users = [
         <th>USER</th>
         <th><div style="margin-right: 40px;">CONTRIBUTIONS</div></th>
         <th>PAST 24hr</th>
-    </tr>
-    <tr>
-        <td>Sample user</td>
-        <td>12345</td>
-        <td style="text-align: center;">123</td>
     </tr>
     <tbody>
     {users.map((user) => (
@@ -70,7 +84,7 @@ let users = [
                 <td>
                     <div>
                         <div style="margin-top: 10px;">
-                            <progress id="progress" value={user.commits} max={maxCommits}></progress>
+                            <progress id="progress" value={rawScore(user.commits, user.pull_requests)} max={rawScore(users[0].commits, users[0].pull_requests)}></progress>
                         </div>
                         <div>
                             {user.commits + " commits, " + user.pull_requests + " pull requests"}
