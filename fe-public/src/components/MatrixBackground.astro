@@ -1,32 +1,18 @@
 ---
-const { length, amplitude, period, offset } = Astro.props;
-// get the params, pass them to the rendered dom
 ---
 
 <pre id="header_block" class="">
-    <div class="hidden h-0">
-        <span id="length">{length}</span>
-        <span id="amplitude">{amplitude}</span>
-        <span id="period">{period}</span>
-        <span id="offset">{offset}</span>
-    </div>
-    <div id="dynamicElement">
+    <div id="matrixHeaderDE">
     </div>
 </pre>
 
 
-<script>
-
-    const paddString = (str, side, count) => {
-
-    }
-    let { length, amplitude, period, offset } = ['length', 'amplitude', 'period', 'offset'].map((str) => {
-        return document.getElementById(str);
-    })
-    // a bit of a hack, sadly
-    // since pre-rendered in the dom and we want to updates constantly
-
+<script type="module">
     const chars = `abcdefghijklmnopqrstuvwxzABCDEFGHIJKLMNOPQRSTUVWZ1234567890!@#$%^&*()_+-=`;
+
+    const length = 17;
+    const amplitude = 5;
+    const period = 40;
 
     function randomChar(){
         return chars[Math.floor(Math.random() * (chars.length - 1))];
@@ -44,17 +30,14 @@ const { length, amplitude, period, offset } = Astro.props;
             string[y] += "\n";
         }
 
+        //TODO: make it single string instead of array
         return string;
-        //return turnTextSideways(string, length + amplitude);
     }
 
     const generateWaveAndUpdateElement = (elementId, initialOffset, delay) => {
         let offset = initialOffset;
         const element = document.getElementById(elementId);
 
-        length = 15;
-        amplitude = 5;
-        period = 40;
         const update = () => {
             const wave = generateWave(200, length, amplitude, period, offset);
             element.innerText = wave.toString();
@@ -66,6 +49,6 @@ const { length, amplitude, period, offset } = Astro.props;
         setTimeout(update, delay);
     };
 
-    generateWaveAndUpdateElement("dynamicElement", 0, 50);
+    generateWaveAndUpdateElement("matrixHeaderDE", 0, 50);
 
 </script>
