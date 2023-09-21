@@ -14,6 +14,7 @@ const { title } = Astro.props;
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Iosevka/6.0.0/iosevka/iosevka.min.css" integrity="sha512-3hU20586NsplKRzjf2jQN5vTRTI2EsXObrHDOBLGdkiRkneg699BlmBXWGHHFHADCF3TOk2BREsVy7qTkmvQqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<title>{title}</title>
 	</head>
   <script>
@@ -28,6 +29,11 @@ const { title } = Astro.props;
     var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
     g.async=true; g.src='//cdn.matomo.cloud/danielalvesworld.matomo.cloud/matomo.js'; s.parentNode.insertBefore(g,s);
   })();
+
+	const chars = `abcdefghijklmnopqrstuvwxzABCDEFGHIJKLMNOPQRSTUVWZ1234567890!@#$%^&*()_+-=`;
+	function randomChar(){
+		return chars[Math.floor(Math.random() * (chars.length - 1))];
+	}
   </script>
 	<body>
 		<slot />
@@ -37,5 +43,6 @@ const { title } = Astro.props;
 	html, body {
 	max-width: 100%;
 	overflow-x: hidden;
+  font-family: 'Iosevka', monospace;
 }
 </style>
