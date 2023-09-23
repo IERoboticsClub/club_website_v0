@@ -3,47 +3,25 @@ import getSortedPosts from "../scripts/load-posts";
 
 let averageCommitContent = 0;
 
-let users = [
-    {
-        username: 'velocitatem',
-        id: 60182044,
-        date: '2023-09-18T15:24:03.223Z',
-        followers: 15,
-        commits: 1536,
-        pull_requests: 177,
-        stars: 62,
-        following: 30,
-        public_repos: 30,
-        public_gists: 21,
-        diff: 20
-    },
-    {
-        username: 'i-be-keggles',
-        id: 50220226,
-        date: '2023-09-18T15:24:03.223Z',
-        followers: 1,
-        commits: 26,
-        pull_requests: 4,
-        stars: 0,
-        following: 2,
-        public_repos: 5,
-        public_gists: 0,
-        diff: 3
-    },
-    {
-        username: 'dsanmart',
-        id: 92187824,
-        date: '2023-09-18T15:24:03.223Z',
-        followers: 5,
-        commits: 232,
-        pull_requests: 5,
-        stars: 7,
-        following: 5,
-        public_repos: 13,
-        public_gists: 0,
-        diff: 10
-    },
-];
+// fetch data from /github/orgrank/ranking
+// get backend url from env variable
+const backendUrl = import.meta.env.BACKEND_URL;
+const githubRankingUrl = backendUrl + "/github/orgrank/ranking";
+const githubRankingResponse = await fetch(githubRankingUrl);
+const githubRanking = await githubRankingResponse.json();
+
+const users = githubRanking.map((user) => {
+    const diff = user.commits - user.commits_yesterday;
+    return {
+        username: user.username,
+        id: user.about?.githubId,
+        commits: user.commits,
+        pull_requests: user.pull_requests,
+        diff: parseInt(Math.random() * 100)
+    }
+})
+.filter((user) => user.id != null);
+
 
 function rawScore(c, pr){
     const commitMultiplier = 1;
