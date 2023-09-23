@@ -21,8 +21,8 @@ module.exports.github = [
             let mongo = req.dependencies.mongo;
             // make sure we are connected to the database
             await mongo.connect();
-            let db = mongo.db('github');
-            let collection = db.collection('ranking');
+            let db = mongo.db('AARC');
+            let collection = db.collection('ghRanking');
             // insert the data into the database
             let result = await collection.insertMany(data);
             // close the connection
@@ -41,14 +41,17 @@ module.exports.github = [
         handler: async (req, res) => {
             let mongo = req.dependencies.mongo;
             await mongo.connect();
-            let db = mongo.db('github');
-            let collection = db.collection('ranking');
+            let db = mongo.db('AARC');
+            let collection = db.collection('ghRanking');
             let uniqueUsers = await collection.distinct('username');
             console.log(uniqueUsers);
             let result = await collection.aggregate([
                 { $match: { username: { $in: uniqueUsers } } },
                 // there is not score variable just get all the data
                 { $group: { _id: '$username', data: { $push: '$$ROOT' } } },
+                // get data also from collection roster and join it with the data by finding info by username
+                { $lookup: { from: 'roster', localField: '_id', foreignField: 'username', as: 'roster' } },
+
             ]).toArray();
             // convert the timestamp to a date
             result = result.map((user) => {
@@ -58,24 +61,22 @@ module.exports.github = [
                 });
                 return user;
             });
+            // for each user get teh last entry
             result = result.map((user) => {
-                // get the one with the smallest timestamp and the one with the largest timestamp
-                // convert the timestamp to a date
-                let first = user.data.reduce((prev, curr) => {
-                    return (prev.date < curr.date) ? prev : curr;
-                });
-                let last = user.data.reduce((prev, curr) => {
+                let lastEntry = user.data.reduce((prev, curr) => {
                     return (prev.date > curr.date) ? prev : curr;
                 });
-                let diff = {};
-                for (let key in first) {
-                    if (key != '_id' && key != 'username' && key != 'date') {
-                        diff[key] = last[key] - first[key];
-                    }
-                }
-                return { username: user._id, diff: diff };
+                user.lastEntry = lastEntry;
+                return user;
             });
             await mongo.close();
+            result = result.map((user) => {
+                return {
+                    ...user.lastEntry,
+                    username: user._id,
+                    about: user.roster[0]
+                };
+            });
             res.json(result);
         }
     }
