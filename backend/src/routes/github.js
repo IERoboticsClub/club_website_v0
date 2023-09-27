@@ -40,44 +40,56 @@ module.exports.github = [
         scope: 'public',
         handler: async (req, res) => {
             let mongo = req.dependencies.mongo;
-            await mongo.connect();
-            let db = mongo.db('AARC');
-            let collection = db.collection('ghRanking');
-            let uniqueUsers = await collection.distinct('username');
-            console.log(uniqueUsers);
-            let result = await collection.aggregate([
-                { $match: { username: { $in: uniqueUsers } } },
-                // there is not score variable just get all the data
-                { $group: { _id: '$username', data: { $push: '$$ROOT' } } },
-                // get data also from collection roster and join it with the data by finding info by username
-                { $lookup: { from: 'roster', localField: '_id', foreignField: 'username', as: 'roster' } },
+            try {
+                await mongo.connect();
+            } catch (err) {
+                console.error('Failed to connect to MongoDB:', err);
+                return res.status(500).json({ error: 'Database connection failed' });
+            }
 
-            ]).toArray();
-            // convert the timestamp to a date
-            result = result.map((user) => {
-                user.data = user.data.map((data) => {
-                    data.date = new Date(data.date);
-                    return data;
+            try {
+                let db = mongo.db('AARC');
+                let collection = db.collection('ghRanking');
+
+                let uniqueUsers = await collection.distinct('username');
+
+                let result = await collection.aggregate([
+                    { $match: { username: { $in: uniqueUsers } } },
+                    { $group: { _id: '$username', data: { $push: '$$ROOT' } } },
+                    { $lookup: { from: 'roster', localField: '_id', foreignField: 'username', as: 'roster' } },
+                ]).toArray();
+
+                result = result.map((user) => {
+                    user.data = user.data.map((data) => {
+                        data.date = new Date(data.date);
+                        return data;
+                    });
+                    return user;
                 });
-                return user;
-            });
-            // for each user get teh last entry
-            result = result.map((user) => {
-                let lastEntry = user.data.reduce((prev, curr) => {
-                    return (prev.date > curr.date) ? prev : curr;
+
+                result = result.map((user) => {
+                    let lastEntry = user.data.reduce((prev, curr) => {
+                        return (prev.date > curr.date) ? prev : curr;
+                    });
+                    user.lastEntry = lastEntry;
+                    return user;
                 });
-                user.lastEntry = lastEntry;
-                return user;
-            });
-            await mongo.close();
-            result = result.map((user) => {
-                return {
-                    ...user.lastEntry,
-                    username: user._id,
-                    about: user.roster[0]
-                };
-            });
-            res.json(result);
+
+                result = result.map((user) => {
+                    return {
+                        ...user.lastEntry,
+                        username: user._id,
+                        about: user.roster[0]
+                    };
+                });
+
+                await mongo.close();
+                res.json(result);
+            } catch (err) {
+                console.error('Error during data processing:', err);
+                await mongo.close();
+                return res.status(500).json({ error: 'Data processing failed' });
+            }
         }
     }
 ];
