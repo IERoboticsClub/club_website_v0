@@ -41,6 +41,40 @@ Wait for your PR to be reviewed and hopefully merged into the main codebase.
 - [W3Schools](https://www.w3schools.com/js/default.asp)
 
 
+## Development Setup
+
+```
+cd backend
+vim .env
+```
+
+set the two required variables `MONGO_URL` and `MONGO_DB_NAME`. You will also need to setup mongodb locally, you can do this by installing it and then running `mongod`.
+
+```
+npm i
+npm run dev
+```
+
+Now the backend should be running locally. In a new terminal:
+
+```
+cd fe-public
+vim .env
+```
+
+paste in:
+
+```
+BACKEND_URL=http://localhost:3000
+```
+
+then run:
+
+```
+npm i
+npm run dev
+```
+
 
 ## Contributors 🤝
 
