@@ -14,7 +14,6 @@ try {
     const githubRanking = await githubRankingResponse.json();
 
     users = githubRanking.map((user) => {
-        const diff = user.commits - user.commits_yesterday;
         return {
             username: user.username,
             id: user?.user?.id,
