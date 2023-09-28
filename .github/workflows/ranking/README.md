@@ -7,7 +7,7 @@ Unleash the power of IE Rank GitHub Action to elevate your GitHub profile. Just 
 ## 🌟 **Step 1: Craft Your Profile README**
 
 1. **Navigate**: Open GitHub and head over to the "Repositories" tab.
-2. **Initiate**: Hit the "New" button to birth a new repository.
+2. **Initiate**: Hit the "New" button to make a new repository.
 3. **Name It**: The repository name must match your GitHub username—*case-sensitive!*
 4. **Initialize**: Don't forget to include a README file.
 
