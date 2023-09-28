@@ -87,8 +87,6 @@ module.exports.github = [
                 console.error('Error during data processing:', err);
                 await mongo.close();
                 return res.status(500).json({ error: 'Data processing failed' });
-            } finally {
-                await mongo.close();
             }
         }
     }
