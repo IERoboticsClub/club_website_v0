@@ -53,10 +53,19 @@ module.exports.github = [
 
                 let uniqueUsers = await collection.distinct('username');
 
+                // get the last 2 days of data for each user
                 let result = await collection.aggregate([
                     { $match: { username: { $in: uniqueUsers } } },
+                    { $sort: { date: -1 } },
                     { $group: { _id: '$username', data: { $push: '$$ROOT' } } },
+                    { $project: { _id: 1, data: { $slice: ['$data', 2] } } },
+                    { $unwind: '$data' },
+                    { $replaceRoot: { newRoot: '$data' } },
+                    { $sort: { date: -1 } },
+                    { $group: { _id: '$username', data: { $push: '$$ROOT' } } },
+                    { $project: { _id: 1, data: 1 } }
                 ]).toArray();
+                console.log(JSON.stringify(result, null, 2));
                 await mongo.close();
 
                 result = result.map((user) => {
@@ -67,18 +76,13 @@ module.exports.github = [
                     return user;
                 });
 
-                result = result.map((user) => {
-                    let lastEntry = user.data.reduce((prev, curr) => {
-                        return (prev.date > curr.date) ? prev : curr;
-                    });
-                    user.lastEntry = lastEntry;
-                    return user;
-                });
 
                 result = result.map((user) => {
+                    let uname = user._id;
+                    delete user._id;
                     return {
-                        ...user.lastEntry,
-                        username: user._id,
+                        username: uname,
+                        ...user,
                     };
                 });
 
