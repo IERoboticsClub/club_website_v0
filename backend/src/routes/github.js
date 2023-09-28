@@ -56,8 +56,8 @@ module.exports.github = [
                 let result = await collection.aggregate([
                     { $match: { username: { $in: uniqueUsers } } },
                     { $group: { _id: '$username', data: { $push: '$$ROOT' } } },
-                    { $lookup: { from: 'roster', localField: '_id', foreignField: 'username', as: 'roster' } },
                 ]).toArray();
+                await mongo.close();
 
                 result = result.map((user) => {
                     user.data = user.data.map((data) => {
@@ -79,11 +79,9 @@ module.exports.github = [
                     return {
                         ...user.lastEntry,
                         username: user._id,
-                        about: user.roster[0]
                     };
                 });
 
-                await mongo.close();
                 res.json(result);
             } catch (err) {
                 console.error('Error during data processing:', err);

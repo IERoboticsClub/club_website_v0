@@ -7,20 +7,27 @@ let averageCommitContent = 0;
 // get backend url from env variable
 const backendUrl = import.meta.env.BACKEND_URL;
 const githubRankingUrl = backendUrl + "/github/orgrank/ranking";
-const githubRankingResponse = await fetch(githubRankingUrl);
-const githubRanking = await githubRankingResponse.json();
+let users = [];
+try {
 
-const users = githubRanking.map((user) => {
-    const diff = user.commits - user.commits_yesterday;
-    return {
-        username: user.username,
-        id: user.about?.githubId,
-        commits: user.commits,
-        pull_requests: user.pull_requests,
-        diff: parseInt(Math.random() * 100)
-    }
-})
-.filter((user) => user.id != null);
+    const githubRankingResponse = await fetch(githubRankingUrl);
+    const githubRanking = await githubRankingResponse.json();
+
+    users = githubRanking.map((user) => {
+        const diff = user.commits - user.commits_yesterday;
+        return {
+            username: user.username,
+            id: user?.user?.id,
+            commits: user.commits,
+            pull_requests: user.pull_requests,
+            diff: user.cc
+        }
+    })
+    .filter((user) => user.id != null);
+    console.log(users);
+} catch (e) {
+    console.log(e);
+}
 
 
 function rawScore(c, pr){
