@@ -43,12 +43,13 @@ Wait for your PR to be reviewed and hopefully merged into the main codebase.
 
 ## Development Setup
 
+Mostly you need to [modify your environment variables](https://www.phind.com/search?cache=ni84tgt3sykafm7y3vwidjlm).
+
 ```
 cd backend
-vim .env
 ```
 
-set the two required variables `MONGO_URL` and `MONGO_DB_NAME`. You will also need to setup mongodb locally, you can do this by installing it and then running `mongod`.
+Open your favorite text editor and create a new file `.env`, then set the two required variables `MONGO_URL` and `MONGO_DB_NAME`. You will also need to setup mongodb locally, you can do this by installing it and then running `mongod`.
 
 ```
 npm i
@@ -59,10 +60,9 @@ Now the backend should be running locally. In a new terminal:
 
 ```
 cd fe-public
-vim .env
 ```
 
-paste in:
+Open your favorite text editor (vim) and add to `.env`:
 
 ```
 BACKEND_URL=http://localhost:3000
