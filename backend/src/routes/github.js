@@ -41,29 +41,27 @@ module.exports.github = [
         handler: async (req, res) => {
             let mongo = req.dependencies.mongo;
             try {
-                await mongo.connect();
+                await mongo.connect(); // also not ideal
             } catch (err) {
                 console.error('Failed to connect to MongoDB:', err);
                 return res.status(500).json({ error: 'Database connection failed' });
             }
 
             try {
-                let db = mongo.db('AARC');
+                let db = mongo.db('AARC'); // not ideal
                 let collection = db.collection('ghRanking');
 
                 let uniqueUsers = await collection.distinct('username');
 
-                // get the last 2 days of data for each user
+                // for each user we get the first entry and the last 2 entries
                 let result = await collection.aggregate([
                     { $match: { username: { $in: uniqueUsers } } },
-                    { $sort: { date: -1 } },
                     { $group: { _id: '$username', data: { $push: '$$ROOT' } } },
-                    { $project: { _id: 1, data: { $slice: ['$data', 2] } } },
+                    { $project: { _id: 0, username: '$_id', data: { $slice: ['$data', -2] } } },
                     { $unwind: '$data' },
                     { $replaceRoot: { newRoot: '$data' } },
-                    { $sort: { date: -1 } },
+                    { $sort: { date: 1 } },
                     { $group: { _id: '$username', data: { $push: '$$ROOT' } } },
-                    { $project: { _id: 1, data: 1 } }
                 ]).toArray();
                 console.log(JSON.stringify(result, null, 2));
                 await mongo.close();
