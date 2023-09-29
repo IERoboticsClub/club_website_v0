@@ -1,4 +1,7 @@
-![Preview](./preview.png)
+# AI and Robotics Club Website
+
+![hacktoberfest](https://img.shields.io/badge/Hacktoberfest-2023-blueviolet?style=for-the-badge&logo=appveyor)
+
 
 
 
