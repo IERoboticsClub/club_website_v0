@@ -1,0 +1,18 @@
+---
+interface Props {
+    title: string;
+}
+
+const { title, } = Astro.props;
+---
+
+<p id="h">{title}</p>
+<style>
+    #h{
+        position: absolute;
+        font-size: 30px;
+        transform: rotate(-90deg);
+        top: 40%;
+        left: 150px;
+    }
+</style>
