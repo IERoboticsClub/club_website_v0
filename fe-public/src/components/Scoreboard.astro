@@ -13,13 +13,27 @@ try {
     const githubRankingResponse = await fetch(githubRankingUrl);
     const githubRanking = await githubRankingResponse.json();
 
-    users = githubRanking.map((user) => {
+    // for each user check if they hve at least 2 data entries under .data
+    users = githubRanking.filter((user) => user.data.length >= 2);
+    console.log(users);
+    users = users.map((user) => {
+        // we have 3 data entries
+        // sort them by date
+        user.data.sort((a, b) => {
+            return new Date(a.date) - new Date(b.date);
+        });
+        // get the first and last entry
+        let earlyData = user.data[0];
+        let lateData = user.data[user.data.length - 1];
+        let middleData = user.data[user.data.length - 2];
         return {
             username: user.username,
-            id: user?.user?.id,
-            commits: user.commits,
-            pull_requests: user.pull_requests,
-            diff: user.cc
+            id: user.data[0]?.user?.id,
+            commits: lateData.commits - earlyData.commits,
+            pull_requests: lateData.pull_requests - earlyData.pull_requests,
+            diff: lateData.commits - middleData.commits
+                + lateData.pull_requests - middleData.pull_requests
+                + middleData.cc - lateData.cc
         }
     })
     .filter((user) => user.id != null);
