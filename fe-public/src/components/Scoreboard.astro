@@ -17,23 +17,23 @@ try {
     users = githubRanking.filter((user) => user.data.length >= 2);
     console.log(users);
     users = users.map((user) => {
+        // we have 3 data entries
+        // sort them by date
+        user.data.sort((a, b) => {
+            return new Date(a.date) - new Date(b.date);
+        });
+        // get the first and last entry
         let earlyData = user.data[0];
         let lateData = user.data[user.data.length - 1];
-        // compare Date objects
-        let diff = Math.abs(new Date(earlyData.date) - new Date(lateData.date));
-        // make sure early is actually earlier
-        if (diff < 0) {
-            let temp = earlyData;
-            earlyData = lateData;
-            lateData = temp;
-        }
-        // get difference in days
+        let middleData = user.data[user.data.length - 2];
         return {
             username: user.username,
             id: user.data[0]?.user?.id,
             commits: lateData.commits - earlyData.commits,
             pull_requests: lateData.pull_requests - earlyData.pull_requests,
-            diff: lateData.cc
+            diff: lateData.commits - middleData.commits
+                + lateData.pull_requests - middleData.pull_requests
+                + middleData.cc - lateData.cc
         }
     })
     .filter((user) => user.id != null);

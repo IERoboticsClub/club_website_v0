@@ -74,7 +74,6 @@ module.exports.github = [
                 // for each user we get:
                 // first ever entry
                 // last 2 entries
-                console.log(uniqueUsers);
                 let result = await Promise.all(uniqueUsers.map(async (user) => {
                     let firstEntry = await collection.findOne({ username: user }, { sort: { date: 1 } });
                     let lastEntries = await collection.find({ username: user }, { sort: { date: -1 }, limit: 2 }).toArray();
