@@ -28,26 +28,32 @@ module.exports.github = [
             // if so, update it
             // else, insert it
             // provided date has time aswell, so we need to remove it
-            data.forEach(async (user) => {
+            let updates = await Promise.all(data.map(async (user) => {
                 user.date = new Date(user.date);
-                user.date.setHours(0, 0, 0, 0);
-                let result = await collection.findOne({ username: user.username, date: user.date });
+                // get all entries for this user
+                let entries = await collection.find({ username: user.username }).toArray();
+                // check if there is an entry for today
+                // compare dates only (not time)
+                const removeTime = (date) => { date = new Date(date); return new Date(date.getFullYear(), date.getMonth(), date.getDate()); };
+                let today = entries.find((entry) => { return removeTime(entry.date).getTime() === removeTime(user.date).getTime(); });
+                // back to string
+                user.date = user.date.toISOString();
+                let result = today !== undefined;
                 if (result) {
-                    // update
-                    await collection.updateOne({ username: user.username, date: user.date }, { $set: user });
+                    await collection.updateOne({ username: user.username, date: today.date  }, { $set: user });
+                    return "updated";
                 } else {
-                    // insert
                     await collection.insertOne(user);
+                    return "inserted";
                 }
-            });
+            }));
 
 
-            let result = await collection.insertMany(data);
             // close the connection
             await mongo.close();
             res.status(200).json({
                 message: 'Data uploaded successfully',
-                result: result
+                updates: updates
             });
 
         }
