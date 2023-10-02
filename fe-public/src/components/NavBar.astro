@@ -1,0 +1,50 @@
+---
+interface Props {
+    width: number;
+}
+const { width, } = Astro.props;
+---
+<div id="NavBarWidthPass" style="display: none;">{width}</div>
+
+
+<div>
+    <ul id = "navBarUL" class="navBar" style="z-index: 10;">
+        <il><a href="">Home</a></il>
+        <il><a href="../blog">Blog</a></il>
+    </ul>
+</div>
+<script>
+    let width = document.getElementById("NavBarWidthPass").innerHTML;
+    const element = document.getElementById("navBarUL");
+    element.style.width = width + "%"
+    console.log(width + "%");
+</script>
+<style>
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 0%;
+        background-color: #f1f1f1;
+        position: fixed;
+        height: 100%;
+        overflow: auto;
+    }
+
+    li a {
+        display: block;
+        color: #000;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
+
+    li a.active {
+        background-color: #04AA6D;
+        color: white;
+    }
+
+    li a:hover:not(.active) {
+        background-color: #555;
+        color: white;
+    }
+</style>
