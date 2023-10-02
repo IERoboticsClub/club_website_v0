@@ -31,9 +31,8 @@ try {
             id: user.data[0]?.user?.id,
             commits: lateData.commits - earlyData.commits,
             pull_requests: lateData.pull_requests - earlyData.pull_requests,
-            diff: lateData.commits - middleData.commits
-                + lateData.pull_requests - middleData.pull_requests
-                + middleData.cc - lateData.cc
+            diff: (lateData.commits - middleData.commits) + " | "
+                + (lateData.pull_requests - middleData.pull_requests)
         }
     })
     .filter((user) => user.id != null);
