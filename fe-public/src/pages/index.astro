@@ -8,7 +8,7 @@ import Scoreboard from "../components/Scoreboard.astro";
 
 <Layout title="AI and Robotics Club">
     <div id="container">
-        <div id="matrix-bg" class="absolute align-top text-gray-300 top-0 left-0">
+        <div>
             <MatrixBackground></MatrixBackground>
         </div>
         <h1 id="header" class="text-5xl text-center h-200 top-16">AI and<br>Robotics<br>Club</h1>
@@ -27,16 +27,6 @@ import Scoreboard from "../components/Scoreboard.astro";
         height: 800px;
         position: relative;
         overflow: hidden;
-    }
-    #matrix-bg {
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        z-index: 0;
-        text: gray-300;
-        -webkit-user-select: none; // Safari
-        user-select: none;
     }
     #header, #header-join {
         z-index: 10;
