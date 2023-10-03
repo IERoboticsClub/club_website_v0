@@ -8,27 +8,57 @@ const { width, } = Astro.props;
 
 
 <div>
-    <ul id = "navBarUL" class="navBar" style="z-index: 10;">
-        <il><a href="">Home</a></il>
-        <il><a href="../blog">Blog</a></il>
-    </ul>
+    <div id="burgerToggleContainer">
+        <button class="toggle"><img id = "burgerIcon" src="../../public/burger.png" alt="burger"></button>
+    </div>
+    <div>
+        <ul id = "navBarUL" class="navBar">
+            <il><a href="">Home</a></il>
+            <il><a href="../blog">Blog</a></il>
+        </ul>
+    </div>
 </div>
 <script>
-    let width = document.getElementById("NavBarWidthPass").innerHTML;
-    const element = document.getElementById("navBarUL");
-    element.style.width = width + "%"
-    console.log(width + "%");
+    const width = document.getElementById("NavBarWidthPass").innerHTML;
+    const navElement = document.getElementById("navBarUL");
+    navElement.style.width = width + "%"
+    const mainElement = document.getElementById("main-body");
+
+    function burgerToggle() {
+        if (navElement.style.display === "none") {
+            navElement.style.display = "block"
+            mainElement.style.marginLeft = width + "%";
+        } else {
+            navElement.style.display = "none";
+            mainElement.style.marginLeft = 0 + "px";
+        }
+    }
+
+    const buttons = document.querySelectorAll('button.toggle');
+    buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+            burgerToggle();
+        });
+    });
 </script>
 <style>
+    #burgerIcon{
+        width: 40px;
+        padding: 10px;
+    }
+    #burgerToggleContainer{
+        position: fixed;
+        z-index:11;
+    }
     ul {
         list-style-type: none;
         margin: 0;
-        padding: 0;
-        width: 0%;
-        background-color: #f1f1f1;
+        padding-top: 100px;
+        background-color: #d5d5d5;
         position: fixed;
         height: 100%;
         overflow: auto;
+        z-index: 10;
     }
 
     li a {
