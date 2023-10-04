@@ -1,0 +1,30 @@
+---
+import ical from 'node-ical';
+let URL = "https://ieconnects.ie.edu/ical/ical_club_300003041.ics"
+const webEvents = await ical.async.fromURL(URL);
+console.log(webEvents);
+let events = Object.values(webEvents).map((event) => {
+console.log(event.summary);
+  return {
+    title: event.summary?.val,
+    start: new Date(event.start),
+    url: event.url,
+    description: event.description
+  };
+})
+events = events.sort((a, b) => {
+  return a.start - b.start;
+}).filter((event) => {
+  return event.start > new Date();
+});
+---
+<h1>Upcoming Events</h1>
+<table>
+{events.map((event) => (
+  <tr>
+    <td>{event.title}</td>
+    <td>{event.start}</td>
+    <td>{event.url}</td>
+  </tr>
+))}
+</table>
