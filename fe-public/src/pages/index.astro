@@ -9,17 +9,13 @@ import Scoreboard from "../components/Scoreboard.astro";
 <Layout title="AI and Robotics Club">
     <div id="container">
         <div>
-            <MatrixBackground></MatrixBackground>
+            <MatrixBackground length=17 amplitude=5 period=40 falloff=2 flip="false"></MatrixBackground>
         </div>
         <h1 id="header" class="text-5xl text-center h-200 top-16">AI and<br>Robotics<br>Club</h1>
         <h2 id="header-join" class="text-3xl text-center top-32">JOIN</h2>
     </div>
-    <div>
-        <Scoreboard></Scoreboard>
-    </div>
-    <div>
-        <WordCloud></WordCloud>
-    </div>
+    <Scoreboard></Scoreboard>
+    <WordCloud></WordCloud>
 </Layout>
 <style>
     #container {
