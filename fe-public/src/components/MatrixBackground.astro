@@ -1,4 +1,6 @@
 ---
+import {v4 as uuidv4} from "uuid";
+
 interface Props {
     length: number;
     amplitude: number;
@@ -8,11 +10,17 @@ interface Props {
 }
 
 const { length, amplitude, period, falloff , flip} = Astro.props;
+
+const idString = uuidv4();
+
+function getId(){
+    return idString;
+}
 ---
 
-<div id="matrix-bg" class="absolute align-top text-gray-300 top-0 left-0">
-    <pre id="header_block">
-        <div id="matrixHeaderDE"></div>
+<div class="matrix-bg" id="matrix-bg">
+    <pre>
+        <div class="matrixHeaderDE" id={"matrixHeaderDE" + idString}></div>
     </pre>
 
     <div style="display: none;">
@@ -21,6 +29,7 @@ const { length, amplitude, period, falloff , flip} = Astro.props;
         <div id="periodPass">{period}</div>
         <div id="falloffPass">{falloff}</div>
         <div id="flipPass">{flip}</div>
+        <div id="idPass">{idString}</div>
     </div>
 </div>
 
@@ -33,6 +42,8 @@ const { length, amplitude, period, falloff , flip} = Astro.props;
     const period = parseFloat(document.getElementById("periodPass").innerHTML);
     const falloff = parseFloat(document.getElementById("falloffPass").innerHTML);
     const flip = document.getElementById("flipPass").innerHTML.toString() == "true";
+
+    const idString = document.getElementById("idPass").innerHTML.toString();
 
     function randomChar(){
         return chars[Math.floor(Math.random() * (chars.length - 1))];
@@ -69,17 +80,19 @@ const { length, amplitude, period, falloff , flip} = Astro.props;
         setTimeout(update, delay);
         };
 
-    generateWaveAndUpdateElement("matrixHeaderDE", 0, 50);
+    generateWaveAndUpdateElement("matrixHeaderDE" + idString, 0, 50);
+
+    const bg_element = document.getElementById("matrix-bg");
+    bg_element.style.position = flip? "relative" : "absolute";
 
 </script>
 <style>
-    #matrix-bg {
+    .matrix-bg, .matrixHeaderDE {
         width: 100%;
-        height: 100%;
         top: -20px;
         left: 0;
         z-index: 0;
-        text: gray-300;
+        color: lightgray;
         user-select: none;
     }
 </style>
