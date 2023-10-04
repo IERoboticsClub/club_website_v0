@@ -1,54 +1,69 @@
 ---
 ---
 
-<pre id="header_block" class="">
+<div id="matrix-bg" class="absolute align-top text-gray-300 top-0 left-0">
+    <pre id="header_block">
     <div id="matrixHeaderDE">
     </div>
 </pre>
+</div>
 
 
 <script type="module">
     const chars = `abcdefghijklmnopqrstuvwxzABCDEFGHIJKLMNOPQRSTUVWZ1234567890!@#$%^&*()_+-=`;
 
-    const length = 17;
-    const amplitude = 5;
-    const period = 40;
+        const length = 17;
+        const amplitude = 5;
+        const period = 40;
+        const falloff = 2;
 
-    function randomChar(){
-        return chars[Math.floor(Math.random() * (chars.length - 1))];
-    }
-
-    function generateWave(size, length, amplitude, period, offset){
-        let string = [length + amplitude];
-        for(let y = 0; y < length + amplitude*2; y++){
-            string[y] = "";
-            for(let x = 0; x < size; x++){
-                let tLen = length + amplitude * Math.sin((x + offset)/period) + Math.sin((x + offset/2)/(period*1.5)) * amplitude/2 + Math.sin((x + offset/3)/(period*2)) * amplitude/2;
-                if(y >= tLen) string[y] += " ";
-                else string[y] += randomChar();
+        function randomChar(){
+            return chars[Math.floor(Math.random() * (chars.length - 1))];
             }
-            string[y] += "\n";
-        }
 
-        //TODO: make it single string instead of array
-        return string;
-    }
+        function generateWave(size, length, amplitude, period, offset){
+            let string = "";
+            for(let y = 0; y < length + amplitude*2; y++){
+                //string[y] = "";
+                for(let x = 0; x < size; x++){
+                    let tLen = length + amplitude * Math.sin((x + offset)/period) + Math.sin((x + offset/2)/(period*1.5)) * amplitude/2 + Math.sin((x + offset/3)/(period*2)) * amplitude/2;
+                    let p = 1/(1 + Math.exp(falloff * ((y-tLen))));
+                    if(Math.random() >= p) string += " ";
+                        else string += randomChar();
+                    }
+                string += "\n";
+                }
 
-    const generateWaveAndUpdateElement = (elementId, initialOffset, delay) => {
-        let offset = initialOffset;
-        const element = document.getElementById(elementId);
+            //TODO: make it single string instead of array
+            return string;
+            }
 
-        const update = () => {
-            const wave = generateWave(200, length, amplitude, period, offset);
-            element.innerText = wave.toString();
-            const goofyPeriodMultiplier = 12; //DO NOT CHANGE THIS OR SIN FUNCTION
-            offset = (offset + 1) % (period * goofyPeriodMultiplier * 3.14);
+        const generateWaveAndUpdateElement = (elementId, initialOffset, delay) => {
+            let offset = initialOffset;
+            const element = document.getElementById(elementId);
+
+            const update = () => {
+                const wave = generateWave(window.outerWidth/2, length, amplitude, period, offset);
+                element.innerText = wave.toString();
+                const goofyPeriodMultiplier = 12; //DO NOT CHANGE THIS OR SIN FUNCTION
+                offset = (offset + 1) % (period * goofyPeriodMultiplier * 3.14);
+                setTimeout(update, delay);
+                };
+
             setTimeout(update, delay);
-        };
+            };
 
-        setTimeout(update, delay);
-    };
-
-    generateWaveAndUpdateElement("matrixHeaderDE", 0, 50);
+        generateWaveAndUpdateElement("matrixHeaderDE", 0, 50);
 
 </script>
+<style>
+    #matrix-bg {
+        width: 100%;
+        height: 100%;
+        top: -20px;
+        left: 0;
+        z-index: 0;
+        text: gray-300;
+        user-select: none;
+    }
+</style>
