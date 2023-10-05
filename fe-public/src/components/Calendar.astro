@@ -25,6 +25,7 @@ events = events.sort((a, b) => {
         <th>URL</th>
     </tr>
 </thead>
+<tbody>
 {events.map((event) => (
   <tr>
     <td>{event.title}</td>
@@ -32,4 +33,5 @@ events = events.sort((a, b) => {
     <td>{event.url}</td>
   </tr>
 ))}
+</tbody>
 </table>
