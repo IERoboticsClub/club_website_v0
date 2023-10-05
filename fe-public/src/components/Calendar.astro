@@ -1,6 +1,6 @@
 ---
 import ical from 'node-ical';
-let URL = "https://ieconnects.ie.edu/ical/ical_club_300003041.ics"
+let URL = import.meta.env.ICAL
 const webEvents = await ical.async.fromURL(URL);
 console.log(webEvents);
 let events = Object.values(webEvents).map((event) => {
