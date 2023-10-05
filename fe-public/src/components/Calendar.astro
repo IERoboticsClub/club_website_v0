@@ -1,10 +1,8 @@
 ---
 import ical from 'node-ical';
-let URL = import.meta.env.ICAL
+let URL = import.meta.env.ICAL || "https://ieconnects.ie.edu/ical/ical_club_300003041.ics"
 const webEvents = await ical.async.fromURL(URL);
-console.log(webEvents);
 let events = Object.values(webEvents).map((event) => {
-console.log(event.summary);
   return {
     title: event.summary?.val,
     start: new Date(event.start),
@@ -20,6 +18,13 @@ events = events.sort((a, b) => {
 ---
 <h1>Upcoming Events</h1>
 <table>
+<thead>
+    <tr>
+        <th>Title</th>
+        <th>Start</th>
+        <th>URL</th>
+    </tr>
+</thead>
 {events.map((event) => (
   <tr>
     <td>{event.title}</td>
