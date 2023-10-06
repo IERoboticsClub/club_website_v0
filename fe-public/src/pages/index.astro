@@ -11,14 +11,15 @@ import SidewaysHeader from "../components/SidewaysHeader.astro";
     <div id="container">
         <MatrixBackground length=17 amplitude=5 period=40 falloff=2 flip="false"></MatrixBackground>
         <h1 id="header" class="text-5xl text-center h-200 top-16">AI and<br>Robotics<br>Club</h1>
-        <h2 id="header-join" class="text-3xl text-center top-32"><a href="https://ieconnects.ie.edu/feeds?type=club&type_id=300003041&tab=home" target="_blank">JOIN</a></h2>
+        <h2 id="header-join" class="text-3xl text-center top-32">
+          <a href="https://ieconnects.ie.edu/feeds?type=club&type_id=300003041&tab=home" target="_blank">JOIN</a>
+        </h2>
     </div>
     <div style="position:relative;">
         <AboutInfo></AboutInfo>
         <SidewaysHeader title="club.about"></SidewaysHeader>
     </div>
-    <p style="height: 100px;"></p>
-    <div style="position:relative;">
+    <div style="position:relative; margin-top: 100px;">
         <Scoreboard></Scoreboard>
         <SidewaysHeader title="club.scoreboard"></SidewaysHeader>
     </div>
