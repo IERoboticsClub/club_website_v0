@@ -12,9 +12,15 @@ const { width, } = Astro.props;
         <button class="toggle"><img id = "burgerIcon" src="../../public/burger.png" alt="burger"></button>
     </div>
     <div>
-        <ul id = "navBarUL" class="navBar">
-            <il><a href="">Home</a></il>
-            <il><a href="../blog">Blog</a></il>
+        <ul id = "navBarUL" class="navBar" style="display: none">
+            <li><a href="">Home</a></li>
+            <li><a href="../blog">Blog</a></li>
+            <hr style="border: 1px solid darkgray; margin-top:10px; margin-bottom: 10px;">
+            <li><a href="https://ie-robotics-club.notion.site/Wiki-a62b9ea0e0a14243b731c45a5f98be61" target="_blank">Notion</a></li>
+            <li><a href="https://ieconnects.ie.edu/feeds?type=club&type_id=300003041&tab=home" target="_blank">IE connects</a></li>
+            <li><a href="https://linktr.ee/ieroboticsclub" target="_blank">Socials</a></li>
+            <hr style="border: 1px solid darkgray; margin-top:10px; margin-bottom: 10px;">
+            <li><a href="https://ieconnects.ie.edu/ieroboticsai/club_signup" target="_blank"><u>Join here!</u></a></li>
         </ul>
     </div>
 </div>
@@ -51,9 +57,9 @@ const { width, } = Astro.props;
         z-index:11;
     }
     ul {
-        list-style-type: none;
+        list-style-type: decimal;
         margin: 0;
-        padding-top: 100px;
+        padding-top: 70px;
         background-color: #d5d5d5;
         position: fixed;
         height: 100%;
