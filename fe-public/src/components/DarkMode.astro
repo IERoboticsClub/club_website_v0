@@ -1,0 +1,49 @@
+
+<select name="themeSwitch" id="themeSwitch">
+  <option value="dark">DARK MODE</option>
+  <option value="light">LIGHT MODE</option>
+</select>
+
+<style>
+  :global(.dark) {
+    color-scheme: dark;
+  }
+
+  #themeSwitch {
+      float: right; 
+      font-family: 'Iosevka', monospace;
+      border-radius: 20px;
+      appearance: none;
+      margin-right: 80px;
+      width: fit-content;
+   
+      padding: 5px 10px;
+  }
+select option {
+  text-align: center;
+}
+
+</style>
+
+<script>
+  const select = document.getElementById("themeSwitch") as HTMLSelectElement;
+  const theme = localStorage.getItem("theme");
+  
+  select.value = theme;
+
+  function updateTheme(value) {
+    const theme = value;
+
+    document.documentElement.classList.remove("light", "dark");
+    document.documentElement.classList.add(theme);
+    localStorage.setItem("theme", value);
+    
+  }
+
+  updateTheme(select.value);
+
+  select.addEventListener("change", (event: Event) => {
+    const select = event.target as HTMLSelectElement;
+    updateTheme(select.value);
+  });
+</script>
