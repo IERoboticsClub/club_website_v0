@@ -10,13 +10,14 @@
   }
 
   #themeSwitch {
-      float: right; 
+      position: absolute;
+      z-index: 100;
+      float: right;
       font-family: 'Iosevka', monospace;
       border-radius: 20px;
       appearance: none;
-      margin-right: 80px;
       width: fit-content;
-   
+
       padding: 5px 10px;
   }
 select option {
@@ -28,7 +29,7 @@ select option {
 <script>
   const select = document.getElementById("themeSwitch") as HTMLSelectElement;
   const theme = localStorage.getItem("theme");
-  
+
   select.value = theme;
 
   function updateTheme(value) {
@@ -37,7 +38,7 @@ select option {
     document.documentElement.classList.remove("light", "dark");
     document.documentElement.classList.add(theme);
     localStorage.setItem("theme", value);
-    
+
   }
 
   updateTheme(select.value);

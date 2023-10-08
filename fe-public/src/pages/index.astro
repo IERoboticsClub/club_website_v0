@@ -7,12 +7,12 @@ import DarkMode from "../components/DarkMode.astro";
 ---
 
 <Layout title="AI and Robotics Club" class="darkMode">
+    <DarkMode />
     <div id="container">
         <MatrixBackground length=17 amplitude=5 period=40 falloff=2 flip="false"></MatrixBackground>
         <h1 id="header" class="text-5xl text-center h-200 top-16">AI and<br>Robotics<br>Club</h1>
         <h2 id="header-join" class="text-3xl text-center top-32">JOIN</h2>
     </div>
-    <DarkMode /> 
     <Scoreboard></Scoreboard>
     <WordCloud></WordCloud>
     <!-- <MatrixBackground length=17 amplitude=5 period=40 falloff=2 flip="true"></MatrixBackground> !-->
