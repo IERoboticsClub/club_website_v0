@@ -1,11 +1,12 @@
 ---
+import loadLocale from '../scripts/locale.js';
+let l = loadLocale("en");
 ---
 
 <div>
-    <p id="body">The Robotics Club was started to encourage IE students to get involved and learn about the latest
-        trends in Robotics & Artificial Intelligence. At the same time, we represent the university in national
-        competitions and gather students to work on exciting new projects. Our mission is to deepen students' knowledge
-        and enthusiasm for robotics by hosting workshops, AI paper discussions, and real projects.</p>
+    <p id="body">
+    {l("index:about:content")}
+    </p>
 </div>
 <style>
     #body{
