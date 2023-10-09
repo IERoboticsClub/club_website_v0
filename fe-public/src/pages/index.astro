@@ -3,10 +3,11 @@ import Layout from '../layouts/Layout.astro';
 import MatrixBackground from '../components/MatrixBackground.astro';
 import WordCloud from "../components/WordCloud.astro";
 import Scoreboard from "../components/Scoreboard.astro";
-
+import DarkMode from "../components/DarkMode.astro";
 ---
 
-<Layout title="AI and Robotics Club">
+<Layout title="AI and Robotics Club" class="darkMode">
+    <DarkMode />
     <div id="container">
         <MatrixBackground length=17 amplitude=5 period=40 falloff=2 flip="false"></MatrixBackground>
         <h1 id="header" class="text-5xl text-center h-200 top-16">AI and<br>Robotics<br>Club</h1>
