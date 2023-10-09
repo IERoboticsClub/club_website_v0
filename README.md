@@ -1,26 +1,7 @@
-![Preview](./preview.png)
+# AI and Robotics Club Website
 
-## Steps for Contributing ✨
+![hacktoberfest](https://img.shields.io/badge/Hacktoberfest-2023-blueviolet?style=for-the-badge&logo=appveyor)
 
-### 1. Fork the Repository 🍴
-Start by creating a fork of the main repository to your GitHub account.
-
-### 2. Clone Locally 💻
-Clone your forked repository onto your local machine.
-
-### 3. Create a New Branch 🌿
-Name the new branch in this format: `{username}-{feature}`. Alternatively, you can connect it to an existing issue.
-
-### 4. Implement Changes ✏️
-Make your changes and commit them to your new branch.
-
-### 5. Create a Pull Request (PR) ➡️
-Submit a pull request to the main repository from your branch.
-
-### 6. Review & Merge ✔️
-Wait for your PR to be reviewed and hopefully merged into the main codebase.
-
-![Workflow Visual Guide](https://drive.google.com/uc?id=1Nk8Nc76M-5-B_JGLm82wBWe3wHhWbes4)
 
 
 
@@ -40,6 +21,40 @@ Wait for your PR to be reviewed and hopefully merged into the main codebase.
 - [FreeCodeCamp](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/basic-javascript/)
 - [W3Schools](https://www.w3schools.com/js/default.asp)
 
+
+## Development Setup
+
+Mostly you need to [modify your environment variables](https://www.phind.com/search?cache=ni84tgt3sykafm7y3vwidjlm).
+
+```
+cd backend
+```
+
+Open your favorite text editor and create a new file `.env`, then set the two required variables `MONGO_URL` and `MONGO_DB_NAME`. You will also need to setup mongodb locally, you can do this by installing it and then running `mongod`.
+
+```
+npm i
+npm run dev
+```
+
+Now the backend should be running locally. In a new terminal:
+
+```
+cd fe-public
+```
+
+Open your favorite text editor (vim) and add to `.env`:
+
+```
+BACKEND_URL=http://localhost:3000
+```
+
+then run:
+
+```
+npm i
+npm run dev
+```
 
 
 ## Contributors 🤝

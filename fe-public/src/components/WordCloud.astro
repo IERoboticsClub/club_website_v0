@@ -2,21 +2,26 @@
 ---
 
 <pre class="center" id="word_cloud">
-    <div id="wordCloudWords"></div>
-    <div id="wordCloudDE"></div>
+    <center>
+        <div id="wordCloudWords"></div>
+        <div id="wordCloudDE"></div>
+    </center>
 </pre>
 <style>
     #wordCloudWords{
+        height: 0;
         font-size: 32px;
-        position: absolute;
+        position: relative;
         line-height:32px;
+        left:0px;
     }
     #wordCloudDE{
         font-size: 16px;
         position: relative;
-        top:-24px;
+        top:-48px;
         line-height: 16px;
         color: #d1d5db;
+        left: -9px;
     }
     .center {
         margin-left: auto;
@@ -28,7 +33,7 @@
 <script>
     const chars = `abcdefghijklmnopqrstuvwxzABCDEFGHIJKLMNOPQRSTUVWZ1234567890!@#$%^&*()_+-=`;
 
-    const width = 85;
+    const width = Math.floor(window.outerWidth/20);
     const height = 25;
     const words = ["AI", "ROBOTICS", "CODE", "IEU", "MACHINE-LEARNING", "ALGORITHMS", "TECH"];
 
@@ -70,10 +75,14 @@
         position;
         constructor (string, boundx, boundy){
             this.value = string;
+            let attempts = 0;
+            const maxAttempts = 1000;
             do {
                 this.position = [Math.floor(gaus()*boundx - this.value.length/2),
                     Math.floor(gaus()*boundy)]
-            } while (!isSpaceFree(this.value, this.position, boundx, 2));
+                attempts++;
+            } while (attempts < maxAttempts && !isSpaceFree(this.value, this.position, boundx, 2));
+            if(attempts >= maxAttempts) this.value = "";
         }
     }
 

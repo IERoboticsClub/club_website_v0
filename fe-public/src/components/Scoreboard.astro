@@ -3,47 +3,44 @@ import getSortedPosts from "../scripts/load-posts";
 
 let averageCommitContent = 0;
 
-let users = [
-    {
-        username: 'velocitatem',
-        id: 60182044,
-        date: '2023-09-18T15:24:03.223Z',
-        followers: 15,
-        commits: 1536,
-        pull_requests: 177,
-        stars: 62,
-        following: 30,
-        public_repos: 30,
-        public_gists: 21,
-        diff: 20
-    },
-    {
-        username: 'i-be-keggles',
-        id: 50220226,
-        date: '2023-09-18T15:24:03.223Z',
-        followers: 1,
-        commits: 26,
-        pull_requests: 4,
-        stars: 0,
-        following: 2,
-        public_repos: 5,
-        public_gists: 0,
-        diff: 3
-    },
-    {
-        username: 'dsanmart',
-        id: 92187824,
-        date: '2023-09-18T15:24:03.223Z',
-        followers: 5,
-        commits: 232,
-        pull_requests: 5,
-        stars: 7,
-        following: 5,
-        public_repos: 13,
-        public_gists: 0,
-        diff: 10
-    },
-];
+// fetch data from /github/orgrank/ranking
+// get backend url from env variable
+const backendUrl = import.meta.env.BACKEND_URL;
+const githubRankingUrl = backendUrl + "/github/orgrank/ranking";
+let users = [];
+try {
+
+    const githubRankingResponse = await fetch(githubRankingUrl);
+    const githubRanking = await githubRankingResponse.json();
+
+    // for each user check if they hve at least 2 data entries under .data
+    users = githubRanking.filter((user) => user.data.length >= 2);
+    console.log(users);
+    users = users.map((user) => {
+        // we have 3 data entries
+        // sort them by date
+        user.data.sort((a, b) => {
+            return new Date(a.date) - new Date(b.date);
+        });
+        // get the first and last entry
+        let earlyData = user.data[0];
+        let lateData = user.data[user.data.length - 1];
+        let middleData = user.data[user.data.length - 2];
+        return {
+            username: user.username,
+            id: user.data[0]?.user?.id,
+            commits: lateData.commits - earlyData.commits,
+            pull_requests: lateData.pull_requests - earlyData.pull_requests,
+            diff: (lateData.commits - middleData.commits) + " | "
+                + (lateData.pull_requests - middleData.pull_requests)
+        }
+    })
+    .filter((user) => user.id != null);
+    console.log(users);
+} catch (e) {
+    console.log(e);
+}
+
 
 function rawScore(c, pr){
     const commitMultiplier = 1;
@@ -63,7 +60,7 @@ function compareUsers(a, b){
 users.sort(compareUsers);
 ---
 
-<div style="text-align: center;"><h2>Github Rankings</h2></div>
+<div style="text-align: center;"><h2>Gitribution Scale</h2></div>
 <table class="center">
     <tr>
         <th>USER</th>
