@@ -1,4 +1,5 @@
 ---
+import { SEO } from "astro-seo";
 interface Props {
 	title: string;
 }
@@ -9,10 +10,39 @@ const { title } = Astro.props;
 <!doctype html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Discover Robotics and Artificial Intelligence at our IE University Club. Explore the latest projects, workshops, and events in this exciting field. Join us and delve into the world of innovation and life-long learning." />
-		<meta name="author" content="IE Robotics and AI Club" />
-		<meta name="viewport" content="width=device-width" />
+		<SEO
+      title="IE Robotics and AI Club"
+      description="Discover Robotics and Artificial Intelligence at our IE University Club. Explore the latest projects, workshops, and events in this exciting field."
+	  charset="UTF-8"
+
+      openGraph={{
+        basic: {
+          title: "IE Robotics and AI Club",
+          type: "website",
+          image: "club-website/fe-public/public/Logo 2.png", //NEED TO FIX AT BETA RELEASE
+		  url: "https://club-website-prod.vercel.app/"
+        }
+      }}
+      extend={{
+        // extending the default link tags
+        link: [{ rel: "icon", href: "/favicon.svg" }],
+        // extending the default meta tags
+        meta: [
+		//normal stuff	
+        {name: "author", content: "IE Robotics and AI Club"},
+		{name: "viewport", content:"width=device-width"},
+		{name: "keywords", content: "AI, Robotics, IE University, Artificial Intelligence, Coding, Programming, AI Club, Robotics Society, University AI Projects, Robotics Research, Student AI Innovations, Machine Learning Enthusiasts, Robotics Workshops, AI Research Group, Innovation in Robotics, Artificial Intelligence Community, Student Robotics Competitions, AI and Robotics Collaboration, Future Tech Leaders, Robotics Engineering Club, AI Algorithms, Robotics Programming, Emerging Technologies, University Tech Enthusiasts, AI and Robotics Events, STEM Education, AI and Robotics Challenges, Tech Innovators, Autonomous Systems, Cutting-Edge Tech, Robotic Automation, Coding Enthusiasts, Programming Club, Code Development, Programming Workshops, Coding Challenges, Software Development, Coding Competitions, Programming Innovations, Coding Bootcamp, Tech Enthusiasts, Coding and Robotics, Tech Events, Code Learning, Computer Science Club."}
+		,
+		{
+            name: "twitter:image",
+            content: "https://user-images.githubusercontent.com/5182256/131216951-8f74f425-f775-463d-a11b-0e01ad9fce8d.png", //FIX BEFORE BETA
+          },
+          { name: "twitter:title", content: "IE Robotics and AI Club" },
+          { name: "twitter:description", content: "Discover Robotics and Artificial Intelligence at our IE University Club. Explore the latest projects, workshops, and events in this exciting field." },
+        ],
+      }}
+    />
+
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Iosevka/6.0.0/iosevka/iosevka.min.css" integrity="sha512-3hU20586NsplKRzjf2jQN5vTRTI2EsXObrHDOBLGdkiRkneg699BlmBXWGHHFHADCF3TOk2BREsVy7qTkmvQqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
