@@ -128,11 +128,20 @@ users.sort(compareUsers);
     progress{
         -webkit-appearance: none;
         appearance: none;
-
-        width: 400px;
+    width: 100%; /* default to full width on smaller screens */
+    max-width: 400px; /* limit maximum width to 400px */
         height: 10px;
         border-radius: 100%;
     }
+
+    /* Media query for larger screens */
+    @media (min-width: 768px) {
+        progress {
+            width: 400px; /* set fixed width on larger screens */
+        }
+    }
+
+
     progress[value]::-webkit-progress-bar {
         background-color: #eee;
         border-radius: 10px;
