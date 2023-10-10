@@ -5,14 +5,23 @@ interface Props {
 
 const { title, } = Astro.props;
 ---
-
-<p id="h">{title}</p>
+<p id="h" class="">{title}</p>
 <style>
-    #h{
+    #h {
         position: absolute;
         font-size: 30px;
         transform: rotate(-90deg);
         top: 40%;
         left: 150px;
+    }
+
+    /* Reset rotation on mobile screens */
+    @media (max-width: 768px) {
+        #h {
+            transform: rotate(0deg);
+            top: 0;
+            left: 0;
+            position: relative;
+        }
     }
 </style>
