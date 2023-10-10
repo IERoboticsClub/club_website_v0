@@ -22,7 +22,7 @@ Easily integrate the IE Metrics GitHub Action to improve your GitHub profile. Ju
 3. **Edit**: Remove the default content and paste the YAML code snippet below:
 
 ```yaml
-name: IE Metrics
+name: IE Rank
 on:
   push:
     branches:
@@ -38,8 +38,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Run IE Metrics
-      uses: velocitatem/OrgGithubMetrics@main
+    - name: Run OrgGithubRanking Action
+      uses: velocitatem/OrgGithubRanking@main
       env:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
