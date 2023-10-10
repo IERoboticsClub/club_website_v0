@@ -1,4 +1,6 @@
 ---
+import SplitFlapString from '../components/SplitFlapString.astro';
+// this is a split-flap animation for a calendar
 import ical from 'node-ical';
 let URL = import.meta.env.ICAL || "https://ieconnects.ie.edu/ical/ical_club_300003041.ics"
 const webEvents = await ical.async.fromURL(URL);
@@ -16,7 +18,16 @@ events = events.sort((a, b) => {
   return event.start > new Date();
 });
 ---
+<script>
+  // global list of promises
+  let promises = [];
+  // store into global storage
+  window.promises = promises;
+</script>
+
+</script>
 <h1>Upcoming Events</h1>
+<SplitFlapString text="Upcoming Events" />
 <table>
 <thead>
     <tr>
@@ -28,10 +39,82 @@ events = events.sort((a, b) => {
 <tbody>
 {events.map((event) => (
   <tr>
-    <td>{event.title}</td>
-    <td>{event.start}</td>
-    <td>{event.url}</td>
+    <td class="text-lg"><SplitFlapString text={event.title}/></td>
   </tr>
 ))}
 </tbody>
 </table>
+<script>
+
+let elements = document.querySelectorAll(".dynamicString")
+console.log(elements);
+
+let flapGrid = [] // elements X characters X flaps
+elements.forEach((element) => {
+  let characters = element.querySelectorAll(".char");
+  let characterGrid = [];
+  characters.forEach((character) => {
+    let flaps = character.querySelectorAll(".flap");
+    characterGrid.push(flaps);
+  });
+  flapGrid.push(characterGrid);
+});
+
+
+const animateFlap = (flapElement) => {
+    // rotate the flap 180 degrees on the X axis
+    // wait for the animation to finish
+    flapElement.style.transform = 'rotateX(180deg)';
+    flapElement.addEventListener('transitionend', () => {
+        // rotate the flap 180 degrees on the X axis
+        flapElement.style.transform = 'rotateX(0deg)';
+    }, { once: true });
+
+}
+
+
+async function characterFlip (listOfFlaps) {
+    console.log(listOfFlaps);
+    let flaps = listOfFlaps;
+    for (let j = 0; j < flaps.length; j++) {
+        const flap = flaps[j];
+        console.log(flap.textContent);
+        // animate a rotation
+        // Show the flap
+        flap.style.display = "block";
+
+        animateFlap(flap);
+
+        // Wait for 600ms
+        await new Promise(resolve => setTimeout(resolve,(Math.random() * 100) + 25));
+
+        // Hide the flap
+        flap.style.display = "none";
+
+        // Set the animation delay
+        flap.style.animationDelay = `${j * 0.1}s`;
+    }
+
+    // Show the correct flap after a delay
+    setTimeout(() => {
+        flaps[flaps.length - 1].style.display = "block";
+        if (flaps[flaps.length - 1].textContent === " ") {
+            // create a space with a non-breaking space
+            flaps[flaps.length - 1].textContent = "\u00A0";
+        }
+    }, 100);
+}
+
+console.log(flapGrid);
+
+for (let i = 0; i < flapGrid.length; i++) {
+    for (let j = 0; j < flapGrid[i].length; j++) {
+        const flaps = flapGrid[i][j];
+        console.log(flaps);
+        characterFlip(flaps);
+    }
+}
+
+
+
+</script>
