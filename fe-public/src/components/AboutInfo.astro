@@ -1,9 +1,13 @@
 ---
 import loadLocale from '../scripts/locale.js';
+import SidewaysHeader from "../components/SidewaysHeader.astro";
 let l = loadLocale("en");
 ---
 
 <div>
+    <SidewaysHeader
+      title={l("index:about:title")}>
+    </SidewaysHeader>
     <p id="body">
     {l("index:about:content")}
     </p>
@@ -16,4 +20,11 @@ let l = loadLocale("en");
         margin-right: auto;
         height: auto;
     }
+
+    @media (max-width: 768px) {
+        #body {
+          width: 80vw;
+        }
+    }
+
 </style>
