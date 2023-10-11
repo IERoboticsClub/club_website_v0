@@ -9,7 +9,7 @@ const stringLength = stringArray.length;
 const flapsForChar = stringArray.map((ch) => {
 // return array [RANDOM CHAR....ch]
     const flaps = [];
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 25; i++) {
         const randomChar = String.fromCharCode(Math.floor(Math.random() * 26) + 65);
         flaps.push(randomChar);
     }
@@ -42,12 +42,12 @@ console.log(flapsForChar);
     .char {
         display: inline-block;
         position: relative;
-    --delay: 0s;
-}
-.flap {
-    display: none;
+        --delay: 0s;
+    }
+    .flap {
+        display: none;
         /* make monosapce */
-    font-family: monospace;
+        font-family: monospace;
 }
 .space {
     display: inline-block;

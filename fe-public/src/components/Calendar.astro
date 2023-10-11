@@ -5,9 +5,16 @@ import ical from 'node-ical';
 let URL = import.meta.env.ICAL || "https://ieconnects.ie.edu/ical/ical_club_300003041.ics"
 const webEvents = await ical.async.fromURL(URL);
 let events = Object.values(webEvents).map((event) => {
+    let date = new Date(event.start);
+    let formattedDate = date.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    });
   return {
     title: event.summary?.val,
-    start: new Date(event.start),
+    // date in dd mm yyyy format
+    start: formattedDate,
     url: event.url,
     description: event.description
   };
@@ -40,36 +47,37 @@ events = events.sort((a, b) => {
 {events.map((event) => (
   <tr>
     <td class="text-lg"><SplitFlapString text={event.title}/></td>
-  </tr>
+</tr>
 ))}
 </tbody>
-</table>
-<script>
+    </table>
+    <script>
 
 let elements = document.querySelectorAll(".dynamicString")
 console.log(elements);
 
 let flapGrid = [] // elements X characters X flaps
 elements.forEach((element) => {
-  let characters = element.querySelectorAll(".char");
-  let characterGrid = [];
-  characters.forEach((character) => {
-    let flaps = character.querySelectorAll(".flap");
-    characterGrid.push(flaps);
-  });
-  flapGrid.push(characterGrid);
+    let characters = element.querySelectorAll(".char");
+    let characterGrid = [];
+    characters.forEach((character) => {
+        let flaps = character.querySelectorAll(".flap");
+        characterGrid.push(flaps);
+    });
+    flapGrid.push(characterGrid);
 });
 
 
 const animateFlap = (flapElement) => {
-    // rotate the flap 180 degrees on the X axis
-    // wait for the animation to finish
-    flapElement.style.transform = 'rotateX(180deg)';
-    flapElement.addEventListener('transitionend', () => {
-        // rotate the flap 180 degrees on the X axis
-        flapElement.style.transform = 'rotateX(0deg)';
-    }, { once: true });
+    // Set the initial state
+    flapElement.style.display = "block";
+    flapElement.style.transform = 'rotateX(0deg)';
+    flapElement.style.transition = 'transform 0.6s ease-out';
 
+    // Trigger the animation
+    setTimeout(() => {
+        flapElement.style.transform = 'rotateX(360deg)';
+    }, 0);
 }
 
 
@@ -81,12 +89,10 @@ async function characterFlip (listOfFlaps) {
         console.log(flap.textContent);
         // animate a rotation
         // Show the flap
-        flap.style.display = "block";
-
         animateFlap(flap);
 
         // Wait for 600ms
-        await new Promise(resolve => setTimeout(resolve,(Math.random() * 100) + 25));
+        await new Promise(resolve => setTimeout(resolve,(Math.random() * 150) + 50));
 
         // Hide the flap
         flap.style.display = "none";
