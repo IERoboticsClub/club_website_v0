@@ -18,6 +18,10 @@ events = events.sort((a, b) => {
 }).filter((event) => {
     return event.start > new Date()
 });
+// filter null properties
+events = events.filter((event) => {
+    return event.title && event.start && event.url;
+});
 // format the date to be dd mm yyyy
 events = events.map((event) => {
     let date = event.start;
@@ -29,7 +33,6 @@ events = events.map((event) => {
         start: `${day}/${month}/${year}`
     }
 })
-console.log(events);
 ---
 <h1>Upcoming Events</h1>
 <table>

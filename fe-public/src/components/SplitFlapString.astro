@@ -16,14 +16,12 @@ const flapsForChar = stringArray.map((ch) => {
     flaps.push(ch);
     return flaps;
 });
-console.log(flapsForChar);
 // replace empty lists from flapsForChar with " "
 flapsForChar.forEach((char, i) => {
     if (char.length === 0) {
         flapsForChar[i] = [" "];
     }
 });
-console.log(flapsForChar);
 ---
     <div class="dynamicString">
     {flapsForChar.map((char) => {
