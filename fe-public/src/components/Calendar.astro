@@ -34,13 +34,11 @@ events = events.map((event) => {
     }
 })
 ---
-<h1>Upcoming Events</h1>
 <table>
-<thead>
+<thead class="dark:bg-gray-800 dark:text-gray-100">
     <tr>
-        <th>Title</th>
-        <th>Start</th>
-        <th>URL</th>
+        <th>Event Name</th>
+        <th>Date</th>
     </tr>
 </thead>
 <tbody>
@@ -98,7 +96,7 @@ async function characterFlip (listOfFlaps) {
         flap.style.animationDelay = `${j * 0.1}s`;
     }
 
-    // Show the correct flap after a delay
+    // Show8the correct flap after a delay
     setTimeout(() => {
         flaps[flaps.length - 1].style.display = "block";
         if (flaps[flaps.length - 1].textContent === " ") {
@@ -136,3 +134,34 @@ document.addEventListener("scroll", () => {
 
 
 </script>
+<style>
+table {
+    width: 1200px;
+    border-collapse: collapse;
+/* center of the page */
+    margin-left: auto;
+    margin-right: auto;
+/* constant font width */
+    font-family: monospace;
+    font-size: 1.5rem;
+
+}
+
+th, td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+@media (max-width: 768px) {
+    table {
+          width: 80vw;
+    }
+    th, td {
+        padding: 4px 8px;
+    }
+}
+
+</style>
