@@ -3,8 +3,6 @@ import SplitFlapString from '../components/SplitFlapString.astro';
 // this is a split-flap animation for a calendar
 import ical from 'node-ical';
 let URL = import.meta.env.ICAL || "https://ieconnects.ie.edu/ical/ical_club_300003041.ics"
-// dev:
-URL = "http://localhost:3000/ical_club_300003041.ics"
 const webEvents = await ical.async.fromURL(URL);
 let events = Object.values(webEvents).map((event) => {
     return {
