@@ -9,13 +9,12 @@ const stringLength = stringArray.length;
 const flapsForChar = stringArray.map((ch) => {
 // return array [RANDOM CHAR....ch]
     const flaps = [];
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 10; i++) {
         const randomChar = String.fromCharCode(Math.floor(Math.random() * 26) + 65);
         flaps.push(randomChar);
     }
     flaps.push(ch);
     return flaps;
-
 });
 console.log(flapsForChar);
 // replace empty lists from flapsForChar with " "
@@ -30,15 +29,16 @@ console.log(flapsForChar);
     {flapsForChar.map((char) => {
         return char != " " ? (
                 <div class="char">
-                {char.map((flap) => {
-                    return <div class="flap">{flap}</div>;
-                })}
-            </div>
+                <div class="flap" style="display: block;">{char[0]}</div>
+                    {char.slice(1).map((flap) => {
+                        return <div class="flap">{flap}</div>;
+                    })}
+                </div>
         ): <div class="space"><span> </span></div>;
     })}
 </div>
 
-    <style>
+<style>
     .char {
         display: inline-block;
         position: relative;
@@ -57,6 +57,3 @@ console.log(flapsForChar);
     --delay: 0s;
 }
 </style>
-<script>
-// Wrap the logic in an async function
-</script>

@@ -3,38 +3,37 @@ import SplitFlapString from '../components/SplitFlapString.astro';
 // this is a split-flap animation for a calendar
 import ical from 'node-ical';
 let URL = import.meta.env.ICAL || "https://ieconnects.ie.edu/ical/ical_club_300003041.ics"
+// dev:
+URL = "http://localhost:3000/ical_club_300003041.ics"
 const webEvents = await ical.async.fromURL(URL);
 let events = Object.values(webEvents).map((event) => {
-    let date = new Date(event.start);
-    let formattedDate = date.toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-    });
-  return {
-    title: event.summary?.val,
-    // date in dd mm yyyy format
-    start: formattedDate,
-    url: event.url,
-    description: event.description
-  };
+    return {
+        title: event.summary?.val,
+        // date in dd mm yyyy format
+        start: new Date(event.start),
+        url: event.url,
+        description: event.description
+    };
 })
 events = events.sort((a, b) => {
-  return a.start - b.start;
+    return a.start - b.start;
 }).filter((event) => {
-  return event.start > new Date();
+    return event.start > new Date()
 });
+// format the date to be dd mm yyyy
+events = events.map((event) => {
+    let date = event.start;
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    return {
+        ...event,
+        start: `${day}/${month}/${year}`
+    }
+})
+console.log(events);
 ---
-<script>
-  // global list of promises
-  let promises = [];
-  // store into global storage
-  window.promises = promises;
-</script>
-
-</script>
 <h1>Upcoming Events</h1>
-<SplitFlapString text="Upcoming Events" />
 <table>
 <thead>
     <tr>
@@ -46,7 +45,12 @@ events = events.sort((a, b) => {
 <tbody>
 {events.map((event) => (
   <tr>
-    <td class="text-lg"><SplitFlapString text={event.title}/></td>
+    <td class="text-lg">
+        <a href={event.url}>
+        <SplitFlapString text={event.title}/>
+        </a>
+    </td>
+    <td class="text-lg"><SplitFlapString text={event.start}/></td>
 </tr>
 ))}
 </tbody>
@@ -87,17 +91,9 @@ async function characterFlip (listOfFlaps) {
     for (let j = 0; j < flaps.length; j++) {
         const flap = flaps[j];
         console.log(flap.textContent);
-        // animate a rotation
-        // Show the flap
         animateFlap(flap);
-
-        // Wait for 600ms
         await new Promise(resolve => setTimeout(resolve,(Math.random() * 150) + 50));
-
-        // Hide the flap
         flap.style.display = "none";
-
-        // Set the animation delay
         flap.style.animationDelay = `${j * 0.1}s`;
     }
 
@@ -105,22 +101,37 @@ async function characterFlip (listOfFlaps) {
     setTimeout(() => {
         flaps[flaps.length - 1].style.display = "block";
         if (flaps[flaps.length - 1].textContent === " ") {
-            // create a space with a non-breaking space
             flaps[flaps.length - 1].textContent = "\u00A0";
+            // TODO maybe mode to split flap component
         }
     }, 100);
 }
 
 console.log(flapGrid);
 
-for (let i = 0; i < flapGrid.length; i++) {
-    for (let j = 0; j < flapGrid[i].length; j++) {
-        const flaps = flapGrid[i][j];
-        console.log(flaps);
-        characterFlip(flaps);
+let decoded = false;
+
+const decodeFlaps = () => {
+    for (let i = 0; i < flapGrid.length; i++) {
+        for (let j = 0; j < flapGrid[i].length; j++) {
+            setTimeout(() => {
+                const flaps = flapGrid[i][j];
+                console.log(flaps);
+                characterFlip(flaps);
+            }, (i * 0.1 + j * 0.1) * 1000);
+        }
     }
+    decoded = true;
 }
 
+// when user scrolls to the element, start the animation
+document.addEventListener("scroll", () => {
+    let element = document.querySelector("table");
+    let rect = element.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0 && !decoded) {
+        decodeFlaps();
+    }
+});
 
 
 </script>
