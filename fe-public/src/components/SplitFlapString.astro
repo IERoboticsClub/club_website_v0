@@ -10,8 +10,7 @@ const flapsForChar = stringArray.map((ch) => {
 // return array [RANDOM CHAR....ch]
     const flaps = [];
     for (let i = 0; i < 10; i++) {
-        const randomChar = String.fromCharCode(Math.floor(Math.random() * 26) + 65);
-        flaps.push(randomChar);
+        flaps.push(String.fromCharCode(Math.floor(Math.random() * 26) + 65));
     }
     flaps.push(ch);
     return flaps;
