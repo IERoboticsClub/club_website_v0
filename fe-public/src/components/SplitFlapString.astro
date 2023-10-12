@@ -1,0 +1,59 @@
+---
+// split flap string astro component
+// goes through each char in string, goes from A->[char] via an animation
+const {text} = Astro.props;
+let string = text;
+const stringArray = string.split("");
+const stringLength = stringArray.length;
+
+const flapsForChar = stringArray.map((ch) => {
+// return array [RANDOM CHAR....ch]
+    const flaps = [];
+    for (let i = 0; i < 10; i++) {
+        flaps.push(String.fromCharCode(Math.floor(Math.random() * 26) + 65));
+    }
+    flaps.push(ch);
+    return flaps;
+});
+// replace empty lists from flapsForChar with " "
+flapsForChar.forEach((char, i) => {
+    if (char.length === 0) {
+        flapsForChar[i] = [" "];
+    }
+});
+---
+    <div class="dynamicString">
+    {flapsForChar.map((char) => {
+        return char != " " ? (
+                <div class="char">
+                <div class="flap" style="display: block;">{char[0]}</div>
+                    {char.slice(1).map((flap) => {
+                        return <div class="flap">{flap}</div>;
+                    })}
+                </div>
+        ): <div class="space"><span> </span></div>;
+    })}
+</div>
+
+<style>
+    .char {
+        display: inline-block;
+        position: relative;
+        --delay: 0s;
+        /* make it a constant width */
+        width: 0.8em;
+        overflow: hidden;
+    }
+    .flap {
+        display: none;
+        /* make monosapce */
+        font-family: monospace;
+}
+.space {
+    display: inline-block;
+    width: 0.5em;
+    height: 1em;
+    position: relative;
+    --delay: 0s;
+}
+</style>
