@@ -39,7 +39,7 @@ events = events.map(({ start, ...rest }) => {
 {events.map((event) => (
         <tr class="dark:bg-gray-700 even:dark:bg-transparent">
     <td class="text-lg eventCol">
-        <a href={event.url}>
+        <a href={event.url} class="ide-link">
         <SplitFlapString text={event.title}/>
         </a>
     </td>
@@ -134,33 +134,51 @@ document.addEventListener("scroll", () => {
 </script>
 <style>
 table {
-    width: 1200px;
+    width: 100%;
+    max-width: 1200px;
     border-collapse: collapse;
-/* center of the page */
-    margin-left: auto;
-    margin-right: auto;
-/* constant font width */
-    font-family: monospace;
-    font-size: 1.5rem;
-
+    margin: 2rem auto; /* Center table and add vertical spacing */
+    font-family: 'Arial', sans-serif; /* Updated font-family for better readability */
+    font-size: 1rem;
+    background-color: #fff;
 }
 
 th, td {
-    padding: 8px 12px;
-    border-bottom: 1px solid #ddd;
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+}
+
+th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+    font-size: 1.2rem;
 }
 
 tr:nth-child(even) {
     background-color: #f9f9f9;
 }
-@media (max-width: 1200px) {
-    table {
-          width: 80vw;
-    }
-    th, td {
-        padding: 4px 8px;
-    }
-        .eventCol { width: 70%; }
+
+a.ide-link {
+    display: inline-block; /* To ensure padding gets applied properly */
+    color: #287BDE;
+    text-decoration: none;
+    border-bottom: 2px dashed #287BDE;
+    padding: 2px 4px;
+    transition: background-color 0.3s, border-color 0.3s; /* Added border-color transition */
 }
 
+a.ide-link:hover {
+    background-color: #e6f1ff; /* Lighter color for hover */
+    border-color: #287BDE; /* Solid color for border */
+}
+
+@media (max-width: 1200px) {
+    th, td {
+        padding: 8px 12px;
+    }
+    .eventCol {
+        width: 70%;
+    }
+}
 </style>
