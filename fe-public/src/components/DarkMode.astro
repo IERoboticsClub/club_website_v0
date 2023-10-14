@@ -30,7 +30,7 @@ select option {
   const select = document.getElementById("themeSwitch") as HTMLSelectElement;
   const theme = localStorage.getItem("theme");
 
-  select.value = theme;
+  select.value = theme || "light";
 
   function updateTheme(value) {
     const theme = value;
