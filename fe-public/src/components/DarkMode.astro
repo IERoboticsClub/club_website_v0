@@ -1,8 +1,11 @@
 
-<select name="themeSwitch" id="themeSwitch">
-  <option value="dark">DARK MODE</option>
-  <option value="light">LIGHT MODE</option>
-</select>
+
+<div class="fixed top-3 right-3 z-10 w-fit bg-transparent rounded-full">
+  <select name="themeSwitch" id="themeSwitch" class="bg-transparent text-xl">
+    <option value="dark" >🌙</option>
+    <option value="light">🔆</option>
+  </select>
+</div>
 
 <style>
   :global(.dark) {
@@ -10,14 +13,12 @@
   }
 
   #themeSwitch {
-      position: absolute;
-      z-index: 100;
-      float: right;
       font-family: 'Iosevka', monospace;
+      margin: 0;
+      padding: 0;
       border-radius: 20px;
       appearance: none;
       width: fit-content;
-
       padding: 5px 10px;
   }
 select option {
