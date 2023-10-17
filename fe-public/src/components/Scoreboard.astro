@@ -62,9 +62,13 @@ users.sort(compareUsers);
 
 <div style="text-align: center;"><h2>Gitribution Scale</h2></div>
 <table class="center">
+    <div id="info-box" style="display: none;" ><p style="padding: 5px;">Please note, GitHub only tracks commits on or merged to main.</p></div>
     <tr>
         <th>USER</th>
-        <th><div style="margin-right: 40px;">CONTRIBUTIONS</div></th>
+        <th><div style="margin-right: 40px;">
+            <p class="inline">CONTRIBUTIONS</p>
+            <button class="inline info-marker" id="info-marker">?</button>
+        </div></th>
         <th>PAST 24hr</th>
     </tr>
     <tbody>
@@ -106,15 +110,38 @@ users.sort(compareUsers);
     #user-icon{
         border-radius: 50%;
     }
+    #info-marker{
+        padding-left: 20px;
+        color: darkgray;
+    }
+    #info-box{
+        background-color: lightgray;
+        border: 1px solid black;
+        position: absolute;
+        width: 20%;
+        margin-left: auto;
+        margin-right: auto;
+        left: 40%;
+        top: -40px;
+    }
 
     progress{
         -webkit-appearance: none;
         appearance: none;
-
-        width: 400px;
+    width: 100%; /* default to full width on smaller screens */
+    max-width: 400px; /* limit maximum width to 400px */
         height: 10px;
         border-radius: 100%;
     }
+
+    /* Media query for larger screens */
+    @media (min-width: 768px) {
+        progress {
+            width: 400px; /* set fixed width on larger screens */
+        }
+    }
+
+
     progress[value]::-webkit-progress-bar {
         background-color: #eee;
         border-radius: 10px;
@@ -125,3 +152,21 @@ users.sort(compareUsers);
     //box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
     }
 </style>
+<script>
+    const infoBox = document.getElementById("info-box");
+    function toggleInfo(){
+        if(infoBox.style.display == "none")
+            infoBox.style.display = "block";
+        else infoBox.style.display = "none";
+    }
+
+    const buttons = document.querySelectorAll('button.info-marker');
+    buttons.forEach((button) => {
+        button.addEventListener('pointerenter', () => {
+            toggleInfo();
+        });
+        button.addEventListener('pointerleave', () => {
+            toggleInfo();
+        });
+    })
+</script>
