@@ -1,54 +1,97 @@
 ---
+import {v4 as uuidv4} from "uuid";
+
+interface Props {
+    length: number;
+    amplitude: number;
+    period: number;
+    falloff: number;
+    flip: boolean;
+}
+
+const { length, amplitude, period, falloff , flip} = Astro.props;
+
+const idString = uuidv4();
+
+function getId(){
+    return idString;
+}
 ---
 
-<pre id="header_block" class="">
-    <div id="matrixHeaderDE">
+<div class="matrix-bg" id="matrix-bg">
+    <pre>
+        <div class="matrixHeaderDE dark:text-gray-500 text-gray-300" id={"matrixHeaderDE" + idString}></div>
+    </pre>
+
+    <div style="display: none;">
+        <div id="lengthPass">{length}</div>
+        <div id="amplitudePass">{amplitude}</div>
+        <div id="periodPass">{period}</div>
+        <div id="falloffPass">{falloff}</div>
+        <div id="flipPass">{flip}</div>
+        <div id="idPass">{idString}</div>
     </div>
-</pre>
+</div>
 
 
 <script type="module">
     const chars = `abcdefghijklmnopqrstuvwxzABCDEFGHIJKLMNOPQRSTUVWZ1234567890!@#$%^&*()_+-=`;
 
-    const length = 17;
-    const amplitude = 5;
-    const period = 40;
+    const length = parseFloat(document.getElementById("lengthPass").innerHTML);
+    const amplitude = parseFloat(document.getElementById("amplitudePass").innerHTML);
+    const period = parseFloat(document.getElementById("periodPass").innerHTML);
+    const falloff = parseFloat(document.getElementById("falloffPass").innerHTML);
+    const flip = document.getElementById("flipPass").innerHTML.toString() == "true";
+
+    const idString = document.getElementById("idPass").innerHTML.toString();
 
     function randomChar(){
         return chars[Math.floor(Math.random() * (chars.length - 1))];
-    }
-
-    function generateWave(size, length, amplitude, period, offset){
-        let string = [length + amplitude];
-        for(let y = 0; y < length + amplitude*2; y++){
-            string[y] = "";
-            for(let x = 0; x < size; x++){
-                let tLen = length + amplitude * Math.sin((x + offset)/period) + Math.sin((x + offset/2)/(period*1.5)) * amplitude/2 + Math.sin((x + offset/3)/(period*2)) * amplitude/2;
-                if(y >= tLen) string[y] += " ";
-                else string[y] += randomChar();
-            }
-            string[y] += "\n";
         }
 
-        //TODO: make it single string instead of array
+    function generateWave(size, length, amplitude, period, offset){
+        let string = "";
+        for(let y = 0; y < length + amplitude*2; y++){
+            for(let x = 0; x < size; x++){
+                let tLen = length + amplitude * Math.sin((x + offset)/period) + Math.sin((x + offset/2)/(period*1.5)) * amplitude/2 + Math.sin((x + offset/3)/(period*2)) * amplitude/2;
+                let l = flip? (tLen - y - length + amplitude) :  (y-tLen);
+                let p = 1/(1 + Math.exp(falloff * l));
+                if(Math.random() >= p) string += " ";
+                    else string += randomChar();
+                }
+            string += "\n";
+            }
+
         return string;
-    }
+        }
 
     const generateWaveAndUpdateElement = (elementId, initialOffset, delay) => {
         let offset = initialOffset;
         const element = document.getElementById(elementId);
 
         const update = () => {
-            const wave = generateWave(200, length, amplitude, period, offset);
+            const wave = generateWave(window.outerWidth/2, length, amplitude, period, offset);
             element.innerText = wave.toString();
             const goofyPeriodMultiplier = 12; //DO NOT CHANGE THIS OR SIN FUNCTION
             offset = (offset + 1) % (period * goofyPeriodMultiplier * 3.14);
             setTimeout(update, delay);
-        };
+            };
 
         setTimeout(update, delay);
-    };
+        };
 
-    generateWaveAndUpdateElement("matrixHeaderDE", 0, 50);
+    generateWaveAndUpdateElement("matrixHeaderDE" + idString, 0, 50);
+
+    const bg_element = document.getElementById("matrix-bg");
+    bg_element.style.position = flip? "relative" : "absolute";
 
 </script>
+<style>
+    .matrix-bg, .matrixHeaderDE {
+        width: 100%;
+        top: -20px;
+        left: 0;
+        z-index: 0;
+        user-select: none;
+    }
+</style>

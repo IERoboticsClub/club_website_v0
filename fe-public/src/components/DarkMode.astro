@@ -1,0 +1,51 @@
+
+
+<div class="fixed top-3 right-3 z-10 w-fit bg-transparent rounded-full">
+  <select name="themeSwitch" id="themeSwitch" class="bg-transparent text-xl">
+    <option value="dark" >🌙</option>
+    <option value="light">🔆</option>
+  </select>
+</div>
+
+<style>
+  :global(.dark) {
+    color-scheme: dark;
+  }
+
+  #themeSwitch {
+      font-family: 'Iosevka', monospace;
+      margin: 0;
+      padding: 0;
+      border-radius: 20px;
+      appearance: none;
+      width: fit-content;
+      padding: 5px 10px;
+  }
+select option {
+  text-align: center;
+}
+
+</style>
+
+<script>
+  const select = document.getElementById("themeSwitch") as HTMLSelectElement;
+  const theme = localStorage.getItem("theme");
+
+  select.value = theme || "light";
+
+  function updateTheme(value) {
+    const theme = value;
+
+    document.documentElement.classList.remove("light", "dark");
+    document.documentElement.classList.add(theme);
+    localStorage.setItem("theme", value);
+
+  }
+
+  updateTheme(select.value);
+
+  select.addEventListener("change", (event: Event) => {
+    const select = event.target as HTMLSelectElement;
+    updateTheme(select.value);
+  });
+</script>
