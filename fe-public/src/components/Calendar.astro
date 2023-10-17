@@ -1,0 +1,184 @@
+---
+import SplitFlapString from '../components/SplitFlapString.astro';
+// this is a split-flap animation for a calendar
+import ical from 'node-ical';
+let URL = import.meta.env.ICAL || "https://ieconnects.ie.edu/ical/ical_club_300003041.ics"
+const webEvents = await ical.async.fromURL(URL);
+let events = Object.values(webEvents).map((event) => {
+    return {
+        title: event.summary?.val,
+        start: new Date(event.start),
+        url: event.url,
+        description: event.description
+    };
+})
+
+events = events
+    .sort((a, b) => a.start - b.start)
+    .filter(event => event.start > new Date() && event.title && event.start && event.url);
+
+// format the date to be dd mm yyyy
+events = events.map(({ start, ...rest }) => {
+    const [day, month, year] = [start.getDate(), start.getMonth() + 1, start.getFullYear()]
+          .map(num => num.toString().padStart(2, '0'));  // Zero-padding for single digit days/months
+
+    return {
+        ...rest,
+        start: `${day}/${month}/${year}`
+    };
+});
+---
+<table>
+<thead class=" dark:text-gray-100 ">
+    <tr ">
+        <th class="dark:text-slate-300 dark:border-gray-600 dark:bg-gray-500">Event Name</th>
+        <th class="dark:text-slate-300 dark:border-gray-600 dark:bg-gray-500">Date</th>
+    </tr>
+</thead>
+<tbody>
+{events.map((event) => (
+        <tr class="dark:bg-gray-700 dark:text-slate-300 dark:even:bg-gray-500 dark:border-gray-600">
+    <td class="text-lg eventCol dark:border-gray-600">
+        <a href={event.url} class="ide-link dark:no-underline">
+        <SplitFlapString text={event.title}/>
+        </a>
+    </td>
+        <td class="text-lg text-right dark:border-gray-600"><SplitFlapString text={event.start}/></td>
+</tr>
+))}
+</tbody>
+    </table>
+    <script>
+
+let elements = document.querySelectorAll(".dynamicString")
+
+
+let flapGrid = [] // elements X characters X flaps
+elements.forEach((element) => {
+    let characters = element.querySelectorAll(".char");
+    let characterGrid = [];
+    characters.forEach((character) => {
+        let flaps = character.querySelectorAll(".flap");
+        characterGrid.push(flaps);
+    });
+    flapGrid.push(characterGrid);
+});
+
+
+const animateFlap = (flapElement) => {
+    // Set the initial state
+    flapElement.style.display = "block";
+    flapElement.style.transform = 'rotateX(0deg)';
+    flapElement.style.transition = 'transform 0.6s ease-out';
+
+    // Trigger the animation
+    setTimeout(() => {
+        flapElement.style.transform = 'rotateX(360deg)';
+    }, 0);
+}
+
+
+async function characterFlip (listOfFlaps) {
+
+    let flaps = listOfFlaps;
+    for (let j = 0; j < flaps.length; j++) {
+        const flap = flaps[j];
+
+        animateFlap(flap);
+        await new Promise(resolve => setTimeout(resolve,(Math.random() * 150) + 50));
+        flap.style.display = "none";
+        flap.style.animationDelay = `${j * 0.1}s`;
+    }
+
+    setTimeout(() => {
+        flaps[flaps.length - 1].style.display = "block";
+        if (flaps[flaps.length - 1].textContent === " ") {
+            flaps[flaps.length - 1].textContent = "\u00A0";
+            // TODO maybe mode to split flap component
+        }
+    }, 100);
+}
+
+
+
+let decoded = false;
+
+const delayFunction = (j) => {
+    return (1 / (2.7 ** (0.2*j))) + 2
+}
+
+const decodeFlaps = () => {
+    for (let i = 0; i < flapGrid.length; i++) {
+        for (let j = 0; j < flapGrid[i].length; j++) {
+            setTimeout(() => {
+                const flaps = flapGrid[i][j];
+
+                characterFlip(flaps);
+                // slowly speed up
+            },  0.3 * delayFunction(i+j) * 1000);
+        }
+    }
+    decoded = true;
+}
+
+// when user scrolls to the element, start the animation
+document.addEventListener("scroll", () => {
+    let element = document.querySelector("table");
+    let rect = element.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0 && !decoded) {
+        decodeFlaps();
+    }
+});
+
+
+</script>
+<style>
+table {
+    width: 100%;
+    max-width: 1200px;
+    border-collapse: collapse;
+    margin: 2rem auto; /* Center table and add vertical spacing */
+    font-family: 'Arial', sans-serif; /* Updated font-family for better readability */
+    font-size: 1rem;
+    background-color: #fff;
+}
+
+th, td {
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+}
+
+th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+a.ide-link {
+    display: inline-block; /* To ensure padding gets applied properly */
+    color: #287BDE;
+    text-decoration: none;
+    border-bottom: 2px dashed #287BDE;
+    padding: 2px 4px;
+    transition: background-color 0.3s, border-color 0.3s; /* Added border-color transition */
+}
+
+a.ide-link:hover {
+    background-color: #e6f1ff; /* Lighter color for hover */
+    border-color: #287BDE; /* Solid color for border */
+}
+
+@media (max-width: 1200px) {
+    th, td {
+        padding: 8px 12px;
+    }
+    .eventCol {
+        width: 70%;
+    }
+}
+</style>

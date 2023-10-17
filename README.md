@@ -58,5 +58,4 @@ npm run dev
 
 
 ## Contributors 🤝
-
 ![Contributors](https://contrib.rocks/image?repo=IERoboticsClub/club-website)

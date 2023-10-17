@@ -5,11 +5,14 @@ import WordCloud from "../components/WordCloud.astro";
 import Scoreboard from "../components/Scoreboard.astro";
 import AboutInfo from "../components/AboutInfo.astro";
 import SidewaysHeader from "../components/SidewaysHeader.astro";
+import DarkMode from "../components/DarkMode.astro";
+import Calendar from "../components/Calendar.astro";
 import loadLocale from '../scripts/locale.js';
 let l = loadLocale("en");
 ---
 
-<Layout title="AI and Robotics Club">
+<Layout title="AI and Robotics Club" class="darkMode">
+    <DarkMode />
     <div id="container">
         <MatrixBackground length=17 amplitude=5 period=40 falloff=2 flip="false"></MatrixBackground>
         <h1 id="header" class="text-5xl text-center h-200 top-16">AI and<br>Robotics<br>Club</h1>
@@ -31,6 +34,9 @@ let l = loadLocale("en");
     <div>
         <WordCloud></WordCloud>
     </div>
+    <Calendar></Calendar>
+    <div class="my-32"/>
+
 </Layout>
 <style>
     #container {
