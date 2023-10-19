@@ -50,12 +50,11 @@ In the end the only reasonable solution to this bug/(feature?) was to add a disc
 }
 ```
 
-## SEO Insights for [Your Website Name]
-### By @jose-izarra
-- Discuss the SEO strategies deployed to make the website more searchable and efficient.
-
-## UI/UX Design Strategy
+## SEO Implementation
 ### By @haxybaxy
+Implementing search engine optimization was made much easier thanks to Astro. I was able to use [this component](https://github.com/jonasmerlin/astro-seo) to let search engines index and follow links on our wesbite, as well as the photos (uploaded on imgur) and text for OpenGraph and Twitter. 
+## UI/UX Design Strategy
+### By @jose-izarra
 - Share insights on the user interface and user experience design elements of the website.
 
 ## Conclusion
