@@ -1,5 +1,5 @@
 ---
-const socials = [
+    const socials = [
         {
             name: "Instagram",
             link: "#",
@@ -45,31 +45,36 @@ const socials = [
 
         }
         */
+    ];
+
+    const resources = [
+        {email: "presi"},
+        {email: "vice-presi"},
+        {email: "idk"}
     ]
 
 ---
 
 <footer class="grid grid-cols-2 h-64">
+       
     <div>
-      <h1 class="text-3xl flex justify-center ">Social Media</h1>
+      <h2 class="text-3xl flex justify-center dark:text-slate-300">Our Social Media</h2>
       <div class="flex">
             {
                 socials.map((current) => {
                     return (
-                        <div class="flex">
-                            <h2>{current.name}</h2>
+                        <div class="flex flex-col items-center p-5 m-1 w-fit">
                             <a href={current.link} class="block">
                                 <svg xmlns={current.xmlns} x="0px" y="0px" width="50" height="50" viewBox="0 0 24 24">
-                                <path d={current.d}></path>
+                                <path d={current.d} class="dark:fill-slate-300"></path>
                                 </svg>
                             </a>
+                            <h3 class="text-sm pt-2">{current.name}</h3> 
                         </div>
                     )
                 })
             }
-         
-        
-         
+
       </div>
     </div>
     <div>
@@ -80,6 +85,7 @@ const socials = [
         <a href="#" class="block">Resources Link 3</a>
       </div>
     </div>
+    
   </footer>
 
 
