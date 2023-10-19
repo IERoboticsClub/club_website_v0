@@ -7,6 +7,7 @@ import AboutInfo from "../components/AboutInfo.astro";
 import SidewaysHeader from "../components/SidewaysHeader.astro";
 import DarkMode from "../components/DarkMode.astro";
 import Calendar from "../components/Calendar.astro";
+import Footer from "../components/Footer.astro";
 import loadLocale from '../scripts/locale.js';
 let l = loadLocale("en");
 ---
@@ -36,6 +37,7 @@ let l = loadLocale("en");
     </div>
     <Calendar></Calendar>
     <div class="my-32"/>
+    <Footer />
 
 </Layout>
 <style>
