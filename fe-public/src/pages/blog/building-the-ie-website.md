@@ -3,10 +3,7 @@ layout: '../../layouts/Blog.astro'
 title: Building a website for the Robotics and AI Club
 ---
 
-
-Certainly! Below is a customized Markdown template for your team's blog post that covers the different aspects mentioned:
-
-# Unveiling the Secrets Behind [Your Website Name]: Math, Leaderboard Stack, and SEO/UI/UX Insights
+# Unveiling the Secrets Behind the IE Robotics and AI Club: Math, Leaderboard Stack, and SEO/UI/UX Insights
 
 ## Introduction
 - A brief overview of what readers can expect from the blog post.
@@ -34,8 +31,23 @@ After about five days in production we noticed something strange. For a lot of t
 This motivated us to dig deeper into the issue, revealing that if a user creates commits on a branch under PR or not, as long as it is not merged into main or the primary branch of the repository, it will not be counted as a contribution to the users profile. This was a major issue since we had a lot of users who were contributing to the club's website and other repositories but their contributions were not being counted.
 In the end the only reasonable solution to this bug/(feature?) was to add a disclaimer to the website and make sure all intended commits get merged into the primary branch of the repository.
 
-```code
-// Code snippet showing how the leaderboard is implemented
+```json
+// Sample of the data we collect
+{
+  "username": "velocitatem",
+  "date": "2023-09-29T10:59:55.624Z",
+  "commits": 1580,
+  "pull_requests": 187,
+  "user": {
+    "followers": 15,
+    "following": 67,
+    "public_repos": 129,
+    "public_gists": 21,
+    "id": 60182044
+  },
+  "stars": 64,
+  "cc": 75
+}
 ```
 
 ## SEO Insights for [Your Website Name]
