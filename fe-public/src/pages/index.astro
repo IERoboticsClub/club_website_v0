@@ -16,7 +16,9 @@ const navBarLength = 10;
 ---
 
 <Layout title="AI and Robotics Club" class="darkMode">
+    <div class="dynamicNav">
     <NavBar width={navBarLength}></NavBar>
+    </div>
     <div id="main-body" style>
         <DarkMode />
         <div id="container">
@@ -73,4 +75,11 @@ const navBarLength = 10;
         z-index: 10;
         position: relative;
     }
+
+    @media (max-width: 1215px) {
+      .dynamicNav {
+        display: none;
+      }
+    }
+
 </style>
