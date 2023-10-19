@@ -1,4 +1,5 @@
 ---
+import socials from '../scripts/socials.json'
 interface Props {
     width: number;
 }
@@ -14,11 +15,15 @@ const { width, } = Astro.props;
     <div>
         <ul id = "navBarUL" class="navBar" style="display: none">
             <li><a href="">Home</a></li>
-            <li><a href="../blog">Blog</a></li>
+            <!-- <li><a href="../blog">Blog</a></li> -->
             <hr style="border: 1px solid darkgray; margin-top:10px; margin-bottom: 10px;">
-            <li><a href="https://ie-robotics-club.notion.site/Wiki-a62b9ea0e0a14243b731c45a5f98be61" target="_blank">Notion</a></li>
             <li><a href="https://ieconnects.ie.edu/feeds?type=club&type_id=300003041&tab=home" target="_blank">IE connects</a></li>
-            <li><a href="https://linktr.ee/ieroboticsclub" target="_blank">Socials</a></li>
+    {
+        socials.map((social) => (
+            <li><a href={social.link} target="_blank">{social.name}</a></li>
+        ))
+    }
+
             <hr style="border: 1px solid darkgray; margin-top:10px; margin-bottom: 10px;">
             <li><a href="https://ieconnects.ie.edu/ieroboticsai/club_signup" target="_blank"><u>Join here!</u></a></li>
         </ul>
