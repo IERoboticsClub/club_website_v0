@@ -55,15 +55,15 @@
 
 ---
 
-<footer class="grid grid-cols-2 h-64">
+<footer class="grid grid-cols-1 h-48">
        
     <div>
-      <h2 class="text-3xl flex justify-center dark:text-slate-300">Our Social Media</h2>
-      <div class="flex">
+      <h2 class="text-3xl flex justify-center dark:text-slate-200 pb-10">Contact Us At</h2>
+      <div class="flex items-center justify-center">
             {
                 socials.map((current) => {
                     return (
-                        <div class="flex flex-col items-center p-5 m-1 w-fit">
+                        <div class="flex flex-col items-center px-10 w-fit">
                             <a href={current.link} class="block">
                                 <svg xmlns={current.xmlns} x="0px" y="0px" width="50" height="50" viewBox="0 0 24 24">
                                 <path d={current.d} class="dark:fill-slate-300"></path>
@@ -77,14 +77,16 @@
 
       </div>
     </div>
+<!--
     <div>
-      <h1 class="text-3xl flex justify-center">Resources</h1>
+      <h1 class="text-3xl flex justify-center dark:text-slate-200 pb-5">Resources</h1>
       <div class="flex">
         <a href="#" class="block">Resources Link 1</a>
         <a href="#" class="block">Resources Link 2</a>
         <a href="#" class="block">Resources Link 3</a>
       </div>
     </div>
+-->
     
   </footer>
 
