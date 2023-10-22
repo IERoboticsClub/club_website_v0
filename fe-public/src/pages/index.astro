@@ -19,7 +19,7 @@ const navBarLength = 10;
     <div class="dynamicNav">
     <NavBar width={navBarLength}></NavBar>
     </div>
-    <div id="main-body" style>
+    <div id="main-body" class="p-0 m-0">
         <DarkMode />
         <div id="container">
             <div id="matrix-bg" class="absolute align-top text-gray-300 top-0 left-0">
@@ -33,13 +33,13 @@ const navBarLength = 10;
             </h2>
         </div>
         <div style="position:relative;">
-            <AboutInfo></AboutInfo>
             <SidewaysHeader title="club.about"></SidewaysHeader>
+            <AboutInfo></AboutInfo>
         </div>
         <p style="padding-top: 200px;"></p>
         <div style="position:relative;">
-            <Scoreboard></Scoreboard>
             <SidewaysHeader title="club.scoreboard"></SidewaysHeader>
+            <Scoreboard></Scoreboard>
         </div>
         <div>
             <WordCloud></WordCloud>
