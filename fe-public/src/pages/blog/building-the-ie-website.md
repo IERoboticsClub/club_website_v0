@@ -1,11 +1,8 @@
 ---
 layout: '../../layouts/Blog.astro'
-title: Building a website for the Robotics and AI Club
+title: Unveiling the Secrets Behind the IE Robotics and AI Club
 ---
 
-# Unveiling the Secrets Behind the IE Robotics and AI Club: Math, Leaderboard Stack, and SEO/UI/UX Insights
-
-## Introduction
 - A brief overview of what readers can expect from the blog post.
 
 ## The Math Behind the Waves and Word Cloud
@@ -33,18 +30,16 @@ For exact replication the current values we're using for these functions are `bl
 
 ## The Leaderboard Stack
 
-Since we were building this website in anticipation of the [Hacktoberfest](https://hactoberfest.com) event, we wanted to have a leaderboard to track the contributions of the club members. We decided to use the [GitHub API](https://docs.github.com/en/rest) to fetch the contributions of the club members and display them on the website. Now how do we get the data for _all_ the users? We first tried using a single API key to get all the data but soon got heavily rate limited :upsidedown:. After further consideration we ended up developing a simple GitHub Actions workflow that each member could easily implement. This action fetched their statistics and sent them to our backend server which stores all this in [MongoDB]().
+Since we were building this [website](https://www.google.com/search?q=ieroboticsclub.com) in anticipation of the [Hacktoberfest](https://hactoberfest.com) event, we wanted to have a leaderboard to track the contributions of the club members. We decided to use the [GitHub API](https://docs.github.com/en/rest) to fetch the contributions of the club members and display them on the website. Now how do we get the data for _all_ the users? We first tried using a single API key to get all the data but soon got heavily rate limited :upsidedown:. After further consideration we ended up developing a simple GitHub Actions workflow that each member could easily implement. This action fetched their statistics and sent them to our backend server which stores all this in [MongoDB](https://www.mongodb.com/).
 
 After 3 days of data collection we could dive into how we want to present this data, we first thought of using overall statistics but in the end settled on the following:
-+ Contributions over the past 24 hours (commits + PRs)
-+ Contributions since the member joined the system (commits + PRs)
+* Contributions over the past 24 hours (commits + PRs)
+* Contributions since the member joined the system (commits + PRs)
 
 We also collect additional data such as followers and similar for further analysis or display.
 
-### In Production Panic :scream:
-After about five days in production we noticed something strange. For a lot of the users the metrics (especially commits) were not being displayed properly, which was really strange since we could see all the data coming in from the users. This made us wonder if our feature was really working or what we had seen was just some coincidental success.
-This motivated us to dig deeper into the issue, revealing that if a user creates commits on a branch under PR or not, as long as it is not merged into main or the primary branch of the repository, it will not be counted as a contribution to the users profile. This was a major issue since we had a lot of users who were contributing to the club's website and other repositories but their contributions were not being counted.
-In the end the only reasonable solution to this bug/(feature?) was to add a disclaimer to the website and make sure all intended commits get merged into the primary branch of the repository.
+### In Production Panic 😱
+After launching our new feature, we noticed discrepancies in user metrics, particularly with commits. Despite data coming in, many users weren't seeing their contributions displayed correctly. Upon investigation, we discovered that commits made on branches, whether under a PR or not, weren't counted unless merged into the main or primary branch. This was problematic as many users' contributions to the club's website and other repositories weren't being acknowledged. We resolved the issue by adding a disclaimer to the website and ensuring that all intended commits are merged into the primary branch.
 
 ```json
 // Sample of the data we collect
@@ -67,22 +62,20 @@ In the end the only reasonable solution to this bug/(feature?) was to add a disc
 
 ## SEO Implementation
 ### By @haxybaxy
-Implementing search engine optimization was made much easier thanks to Astro. I was able to use [this component](https://github.com/jonasmerlin/astro-seo) to let search engines index and follow links on our wesbite, as well as the photos (uploaded on imgur) and text for OpenGraph and Twitter. 
+Implementing search engine optimization was made much easier thanks to Astro. I was able to use [this component](https://github.com/jonasmerlin/astro-seo) to let search engines index and follow links on our wesbite, as well as the photos (uploaded on imgur) and text for OpenGraph and Twitter.
 
 ## UI/UX Design Strategy
 ### By @jose-izarra
 
-When developing the UI/UX design of our page, we wanted the user experience to feel as unique as possible. We touched in our strengths as a robotics club, leaning into a very techie design with interesting, engaging features. Additions such as the github leaderboard, our (literal) burger in the top left, the ever-changing wave background, and our amazing dark mode feature (highly reccomended). Our website is a demonstration of all of our personalities shining through to create this beautiful project. 
+When developing the UI/UX design of our page, we wanted the user experience to feel as unique as possible. We touched in our strengths as a robotics club, leaning into a very techie design with interesting, engaging features. Additions such as the github leaderboard, our (literal) burger in the top left, the ever-changing wave background, and our amazing dark mode feature (highly reccomended). Our website is a demonstration of all of our personalities shining through to create this beautiful project.
 
 ## Conclusion
 - Sum up the key takeaways from each section.
 - A call-to-action, encouraging readers to explore the features discussed.
 
-## References
-- [External Link 1](https://example.com)
-- [External Link 2](https://example.com)
+
 
 ---
 
-_Author(s): @i-be-keggles, @velocitatem, @jose-izarra, @haxybaxy_
-_Date: Month, Day, Year_
+
+_Author(s): [@i-be-keggles](https://github.com/i-be-keggles), [@velocitatem](https://github.com/velocitatem), [@jose-izarra](https://github.com/jose-izarra), [@haxybaxy](https://github.com/haxybaxy)_
