@@ -53,9 +53,11 @@ In the end the only reasonable solution to this bug/(feature?) was to add a disc
 ## SEO Implementation
 ### By @haxybaxy
 Implementing search engine optimization was made much easier thanks to Astro. I was able to use [this component](https://github.com/jonasmerlin/astro-seo) to let search engines index and follow links on our wesbite, as well as the photos (uploaded on imgur) and text for OpenGraph and Twitter. 
+
 ## UI/UX Design Strategy
 ### By @jose-izarra
-- Share insights on the user interface and user experience design elements of the website.
+
+When developing the UI/UX design of our page, we wanted the user experience to feel as unique as possible. We touched in our strengths as a robotics club, leaning into a very techie design with interesting, engaging features. Additions such as the github leaderboard, our (literal) burger in the top left, the ever-changing wave background, and our amazing dark mode feature (highly reccomended). Our website is a demonstration of all of our personalities shining through to create this beautiful project. 
 
 ## Conclusion
 - Sum up the key takeaways from each section.
