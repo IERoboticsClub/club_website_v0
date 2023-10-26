@@ -10,7 +10,6 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/tailwind": "^5.0.0",
     "astro": "^3.0.10",
     "astro-seo": "^0.8.0",
     "gray-matter": "^4.0.3",
@@ -21,6 +20,7 @@
     "uuid": "^9.0.1 "
   },
   "devDependencies": {
+    "@astrojs/tailwind": "^5.0.2",
     "@types/uuid": "^9.0.4",
     "node-ical": "^0.16.1",
     "tailwindcss": "^3.3.3"

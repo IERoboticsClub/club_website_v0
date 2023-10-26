@@ -1,0 +1,160 @@
+---
+import socials from '../scripts/socials.json'
+interface Props {
+    width: number;
+}
+const { width, } = Astro.props;
+---
+<div id="NavBarWidthPass" style="display: none;">{width}</div>
+
+
+<div>
+    <div id="burgerToggleContainer">
+        <button class="toggle pl-5 pt-5">
+            <!-- <img id = "burgerIcon" src="burger.png" alt="burger"> -->
+            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+ width="40" height="40" viewBox="0 0 512.000000 512.000000"
+ preserveAspectRatio="xMidYMid meet">
+
+<g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
+fill="#000000" stroke="none">
+<path class="dark:fill-white" d="M2322 4380 c-729 -37 -1305 -252 -1675 -626 -258 -262 -366 -506
+-370 -839 -1 -129 0 -144 22 -188 27 -56 78 -108 127 -132 l34 -16 0 -74 0
+-73 -53 14 c-28 7 -79 14 -113 14 -50 0 -64 -4 -81 -22 -30 -34 -34 -55 -18
+-94 16 -39 36 -49 122 -57 35 -4 80 -15 100 -24 l38 -18 0 -120 0 -120 -95 -5
+c-115 -7 -183 -34 -250 -102 -135 -135 -144 -351 -20 -492 35 -39 113 -92 151
+-101 26 -6 27 -10 33 -103 9 -122 36 -206 90 -280 67 -90 142 -142 251 -173
+75 -21 3815 -21 3890 0 109 31 184 83 251 173 54 74 81 158 90 280 6 93 7 97
+33 103 38 9 116 62 151 101 124 141 115 357 -20 492 -67 68 -135 95 -250 102
+l-95 5 -3 121 -3 121 44 17 c23 9 75 20 114 25 85 11 91 14 109 57 16 38 8 68
+-25 98 -18 16 -31 18 -98 13 -43 -4 -93 -9 -110 -13 l-33 -6 0 70 c0 71 0 71
+34 87 49 24 100 76 127 132 22 44 23 59 22 188 -4 331 -112 576 -365 833 -269
+272 -619 451 -1088 555 -299 67 -698 95 -1068 77z m708 -189 c200 -30 285 -45
+399 -73 475 -114 850 -347 1072 -663 124 -176 169 -320 169 -536 0 -120 0
+-121 -29 -150 l-29 -29 -2052 0 -2052 0 -29 29 c-29 29 -29 30 -29 150 0 271
+86 470 300 695 321 337 789 523 1485 590 83 8 723 -3 795 -13z m1460 -1735 c0
+-108 -1 -114 -23 -129 -39 -25 -127 -47 -192 -47 -82 0 -145 20 -232 74 -40
+24 -103 57 -140 73 -63 26 -78 28 -198 28 -117 -1 -137 -3 -196 -27 -37 -14
+-97 -45 -134 -69 -86 -54 -161 -79 -240 -79 -84 0 -138 18 -256 86 -123 70
+-205 94 -319 94 -114 0 -196 -24 -319 -94 -118 -68 -172 -86 -256 -86 -82 0
+-145 20 -232 74 -40 24 -103 57 -140 73 -63 26 -78 28 -198 28 -117 -1 -137
+-3 -196 -27 -37 -14 -97 -45 -134 -69 -123 -77 -238 -98 -355 -63 -100 30
+-100 30 -100 160 l0 114 1930 0 1930 0 0 -114z m-2920 -199 c30 -14 91 -47
+134 -71 108 -61 191 -80 314 -73 117 6 182 27 298 98 181 109 314 106 503 -10
+106 -64 161 -82 283 -88 120 -7 206 12 303 68 150 85 194 102 270 107 100 6
+153 -9 275 -79 58 -33 128 -67 155 -76 75 -24 226 -28 308 -9 38 9 70 16 73
+16 2 0 4 -31 4 -70 l0 -70 -1930 0 -1930 0 0 70 c0 39 3 70 8 70 4 -1 34 -7
+67 -15 79 -19 202 -19 278 1 66 17 111 38 200 92 94 57 149 73 247 69 67 -2
+97 -9 140 -30z m423 -441 c63 -26 117 -111 117 -184 0 -35 43 -72 82 -72 84 1
+108 75 64 203 l-23 67 1284 0 c1056 0 1289 -2 1316 -14 43 -18 93 -76 108
+-127 10 -32 10 -51 1 -85 -17 -63 -38 -91 -91 -122 l-46 -27 -737 -3 c-406 -1
+-738 -1 -738 2 0 2 9 25 20 51 26 62 35 143 18 175 -18 34 -58 55 -91 46 -39
+-10 -64 -41 -71 -93 -9 -65 -46 -124 -98 -153 l-43 -25 -1375 0 -1375 0 -46
+27 c-53 31 -74 59 -91 122 -9 34 -9 53 1 85 14 49 64 109 106 127 45 20 1661
+20 1708 0z m2675 -623 c-2 -61 -10 -100 -23 -128 -23 -47 -81 -107 -127 -132
+-31 -17 -122 -18 -1958 -18 -1836 0 -1927 1 -1958 18 -46 25 -104 85 -127 132
+-13 28 -21 67 -23 128 l-4 87 2112 0 2112 0 -4 -87z"/>
+<path class="dark:fill-white" d="M2414 3996 c-21 -18 -28 -32 -28 -61 0 -33 8 -45 71 -106 78 -76 109
+-86 155 -49 55 43 40 98 -51 183 -71 65 -102 72 -147 33z"/>
+<path class="dark:fill-white" d="M3151 3944 c-39 -33 -43 -83 -8 -118 25 -25 177 -66 243 -66 72 0
+109 80 62 135 -19 21 -44 31 -133 50 -60 13 -115 24 -122 25 -6 0 -25 -12 -42
+-26z"/>
+<path class="dark:fill-white" d="M1704 3830 c-40 -16 -54 -49 -54 -127 0 -91 23 -125 85 -125 30 0 45
+6 62 27 19 22 23 37 23 100 0 62 -3 78 -22 99 -26 29 -63 39 -94 26z"/>
+<path class="dark:fill-white" d="M3715 3788 c-31 -18 -44 -40 -45 -76 0 -42 28 -71 111 -113 198 -99
+397 -285 476 -444 11 -22 28 -72 37 -112 10 -40 26 -79 37 -89 29 -26 83 -23
+114 6 30 28 32 68 10 155 -60 228 -297 482 -598 639 -92 48 -110 53 -142 34z"/>
+<path class="dark:fill-white" d="M2964 3536 c-21 -18 -28 -32 -28 -61 0 -33 8 -45 71 -106 73 -71 100
+-82 144 -58 30 16 49 67 37 100 -5 15 -38 54 -73 88 -72 70 -105 78 -151 37z"/>
+<path class="dark:fill-white" d="M2235 3452 c-17 -11 -52 -43 -78 -72 -37 -41 -47 -60 -47 -87 0 -47
+37 -83 86 -83 31 0 45 9 105 69 72 72 81 94 58 144 -12 26 -47 47 -77 47 -9 0
+-31 -8 -47 -18z"/>
+<path class="dark:fill-white" d="M1245 3371 c-11 -5 -48 -38 -82 -74 -72 -74 -80 -106 -38 -151 18
+-19 34 -26 61 -26 33 0 46 8 106 68 58 58 68 74 68 103 -1 65 -57 103 -115 80z"/>
+<path class="dark:fill-white" d="M3625 3276 c-38 -18 -121 -103 -134 -139 -15 -40 8 -94 46 -104 48
+-12 66 -4 136 65 59 59 67 71 67 104 0 36 -26 78 -49 78 -5 0 -15 2 -23 5 -7
+2 -26 -2 -43 -9z"/>
+<path class="dark:fill-white" d="M1703 3185 c-36 -15 -53 -42 -53 -81 0 -19 18 -45 69 -97 60 -62 74
+-71 105 -71 48 0 86 36 86 82 0 28 -11 45 -61 97 -71 74 -101 89 -146 70z"/>
+<path class="dark:fill-white" d="M2685 3075 c-34 -33 -34 -83 1 -116 23 -21 35 -24 106 -24 75 0 81 2
+104 28 31 37 31 81 -1 112 -22 22 -32 25 -105 25 -73 0 -83 -3 -105 -25z"/>
+</g>
+</svg>
+        </button>
+    </div>
+    <div>
+        <ul id = "navBarUL" class="navBar bg-[#d5d5d5] dark:bg-[#2D4356]" style="display: none">
+            <li><a href="">Home</a></li>
+            <!-- <li><a href="../blog">Blog</a></li> -->
+            <hr style="border: 1px solid darkgray; margin-top:10px; margin-bottom: 10px;">
+    {
+        socials.map((social) => (
+            <li><a href={social.link} target="_blank" class="dark:text-white text-black" >{social.name}</a></li>
+        ))
+    }
+
+            <hr style="border: 1px solid darkgray; margin-top:10px; margin-bottom: 10px;">
+            <li><a href="https://ieconnects.ie.edu/ieroboticsai/club_signup" target="_blank"><u>Join here!</u></a></li>
+        </ul>
+    </div>
+</div>
+<script>
+    const width = document.getElementById("NavBarWidthPass").innerHTML;
+    const navElement = document.getElementById("navBarUL");
+    navElement.style.width = width + "%"
+    const mainElement = document.getElementById("main-body");
+
+    function burgerToggle() {
+        if (navElement.style.display === "none") {
+            navElement.style.display = "block"
+            mainElement.style.marginLeft = width + "%";
+        } else {
+            navElement.style.display = "none";
+            mainElement.style.marginLeft = 0 + "px";
+        }
+    }
+
+    const buttons = document.querySelectorAll('button.toggle');
+    buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+            burgerToggle();
+        });
+    });
+</script>
+<style>
+    #burgerIcon{
+        width: 40px;
+        padding: 10px;
+    }
+    #burgerToggleContainer{
+        position: fixed;
+        z-index:11;
+    }
+    ul {
+        list-style-type: decimal;
+        margin: 0;  
+        padding-top: 70px;
+        /* background-color: #d5d5d5; */
+        position: fixed;
+        height: 100%;
+        overflow: auto;
+        z-index: 10;
+    }
+
+    li a {
+        display: block;
+        /* color: #000; */
+        padding: 8px 16px;
+        text-decoration: none;
+    }
+
+    li a.active {
+        background-color: #04AA6D;
+        color: white;
+    }
+
+    li a:hover:not(.active) {
+        background-color: #555;
+        color: white;
+    }
+</style>

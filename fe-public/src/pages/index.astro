@@ -4,38 +4,51 @@ import MatrixBackground from '../components/MatrixBackground.astro';
 import WordCloud from "../components/WordCloud.astro";
 import Scoreboard from "../components/Scoreboard.astro";
 import AboutInfo from "../components/AboutInfo.astro";
+import NavBar from "../components/NavBar.astro";
 import SidewaysHeader from "../components/SidewaysHeader.astro";
 import DarkMode from "../components/DarkMode.astro";
 import Calendar from "../components/Calendar.astro";
+import Footer from "../components/Footer.astro";
 import loadLocale from '../scripts/locale.js';
 let l = loadLocale("en");
+
+const navBarLength = 10;
 ---
 
 <Layout title="AI and Robotics Club" class="darkMode">
-    <DarkMode />
-    <div id="container">
-        <MatrixBackground length=17 amplitude=5 period=40 falloff=2 flip="false"></MatrixBackground>
-        <h1 id="header" class="text-5xl text-center h-200 top-16">AI and<br>Robotics<br>Club</h1>
-        <h2 id="header-join" class="text-3xl text-center top-32">
-          <a href="https://ieconnects.ie.edu/feeds?type=club&type_id=300003041&tab=home" target="_blank">
-            {l("index:action")}
-          </a>
-        </h2>
+    <div class="dynamicNav">
+    <NavBar width={navBarLength}></NavBar>
     </div>
-    <div style="position:relative;">
-        <AboutInfo></AboutInfo>
-    </div>
-    <div style="position:relative; margin-top: 100px;">
-        <SidewaysHeader
-          title={l("index:scoreboard:title")}>
-        </SidewaysHeader>
-        <Scoreboard></Scoreboard>
-    </div>
-    <div>
-        <WordCloud></WordCloud>
+    <div id="main-body" class="p-0 m-0">
+        <DarkMode />
+        <div id="container">
+            <div id="matrix-bg" class="absolute align-top text-gray-300 top-0 left-0">
+                <MatrixBackground length=17 amplitude=5 period=40 falloff=2 flip="false"></MatrixBackground>
+            </div>
+            <h1 id="header" class="text-5xl text-center h-200 top-16">Robotics<br>and AI<br>Club</h1>
+            <h2 id="header-join" class="text-3xl text-center top-32">
+              <a href="https://ieconnects.ie.edu/feeds?type=club&type_id=300003041&tab=home" target="_blank">
+                {l("index:action")}
+              </a>
+            </h2>
+        </div>
+        <div style="position:relative;">
+            <SidewaysHeader title="club.about"></SidewaysHeader>
+            <AboutInfo></AboutInfo>
+        </div>
+        <p style="padding-top: 200px;"></p>
+        <div style="position:relative;">
+            <SidewaysHeader title="club.scoreboard"></SidewaysHeader>
+            <Scoreboard></Scoreboard>
+        </div>
+        <div>
+            <WordCloud></WordCloud>
+        </div>
     </div>
     <Calendar></Calendar>
     <div class="my-32"/>
+    <Footer />
+    </div>
 
 </Layout>
 <style>
@@ -49,4 +62,11 @@ let l = loadLocale("en");
         z-index: 10;
         position: relative;
     }
+
+    @media (max-width: 1215px) {
+      .dynamicNav {
+        display: none;
+      }
+    }
+
 </style>

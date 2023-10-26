@@ -1,0 +1,25 @@
+---
+import socials from '../scripts/socials.json'
+
+
+    const resources = [
+        {email: "presi"},
+        {email: "vice-presi"},
+        {email: "idk"}
+    ]
+
+---
+
+<footer class="flex justify-center text-center my-5">
+  <ul class="list">
+    {
+      socials.map((current) => {
+        return (
+          <li class="inline-block mx-4 p-5">
+            <a href={current.link}>{current.name}</a>
+          </li>
+        )
+      })
+    }
+  </ul>
+</footer>
