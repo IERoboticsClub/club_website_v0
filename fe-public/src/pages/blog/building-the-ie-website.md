@@ -3,32 +3,45 @@ layout: '../../layouts/Blog.astro'
 title: Unveiling the Secrets Behind the IE Robotics and AI Club
 ---
 
-- A brief overview of what readers can expect from the blog post.
+In this article we will be discussing the various features of the IE Robotics and AI Club website, and how we implemented them. We will be covering the following topics: **The Wave and Word Cloud**, **The Leaderboard Stack**, **SEO Implementation**, and **UI/UX Design Strategy**. We hope you enjoy reading about our website as much as we enjoyed making it!
+
 
 ## The Math Behind the Waves and Word Cloud
 ### By @i-be-keggles
 The matrix-esque random character backgrounds were a theme we wanted to use prevalently throughout the website, and can be seen in the wave function we use as a header, and the word cloud holding the projects. The character animation itself is just a simple random sample uniformly pulled from a predefined list of the basic alphanumeric characters along with some special symbols we thought would look good in the components, but the math behind *where* we render the characters is a little more interesting. The basic method is a specific function for defining target length for a string of characters in the component, and then applying some gaussian distortion to blur the edges and make it a bit more dynamic.
 
 The wave effect was achieved by layering sin waves on top of each other similar to how many water simulations are built. The function is as follows: for each column of characters going down the screen, the length of that string is defined as
-`l + a * sin((x + d)/t) + sin((x + d/2)/(t*1.5)) * a/2 + sin((x + d/3)/(t*2)) * a/2`
+
+
+$$l + a \sin\left(\frac{x + d}{t}\right) + \sin\left(\frac{x + d/2}{1.5t}\right) \frac{a}{2} + \sin\left(\frac{x + d/3}{2t}\right) \frac{a}{2}$$
+
+
 where l is length, a is amplitude, p is period, d is offset, and x is the column.
 The hardcoded values in the second and third sin functions are to add variation to the layers.
 To animate the wave, the offest, d, is increased over time to "scroll" the wave across the screen. For the wave to loop infinitely without needing to worry about errors with large numbers, the offset is also reset when it reaches the period of the entire length function, so that the wave can flow seamlessly and our variables are kept in a manageable range.
 
-The word cloud is simpler. It's defined as two grids of characters, one has smaller cells and is used for the background, the other has larger cells and displays the words. The words are randomly positioned via a normal distribution. The function to define the area of the background is a simple eliptical radius, with the distance of the cell from the center (in the background grid) fed into the blur function. Said distance is in the range [0, 1] and calculated with
-`sqrt((x-width/2)/(width/2)^2 + (y-height/2)/(height/2)^2)`
+The word cloud is simpler. It's defined as two grids of characters, one has smaller cells and is used for the background, the other has larger cells and displays the words. The words are randomly positioned via a normal distribution. The function to define the area of the background is a simple eliptical radius, with the distance of the cell from the center (in the background grid) fed into the blur function. Said distance is in the range [0, 1] and calculate  with
+
+$$\sqrt{\frac{(x - \frac{\text{width}}{2})}{\left(\frac{\text{width}}{2}\right)^2} + \frac{(y - \frac{\text{height}}{2})}{\left(\frac{\text{height}}{2}\right)^2}}$$
+
 where x and y is the position of the cell, and the width and height parameters are the target dimensions for the entire word cloud.
 
 And now for the blur, which ties everything together. There are two approaches we tried. One used a gaussian distribution with a mean about the target length to define whether or a character would render depending on how much blur we wanted. The logic is quite simple:
-`if (1-d) * gaus > blur then render`
+
+$$\text{if } (1-d) \times \text{gaus} > \text{blur} \text{ then render}$$
+
 where d is the distance from the center in the range [0, 1], and gaus is a random value in the range [0, 1] sampled from a gaussian distribution.
 The second method uses a sigmoid function to define the probability of a character spawning relative to a target length, defined as
-`p = 1/(1 + e^(f * l))`
+
+$$p = \frac{1}{1 + e^{f \cdot l}}$$
+
 where l is length and f is falloff.
 Both methods look great, and are currently used in the website. The gaussian blur is applied to the wave function, and the sigmoid is used by the wave.
 For exact replication the current values we're using for these functions are `blur = 0.15` and `f=2`, for the cloud and wave respectively.
 
 ## The Leaderboard Stack
+
+### by @velocitatem
 
 Since we were building this [website](https://www.google.com/search?q=ieroboticsclub.com) in anticipation of the [Hacktoberfest](https://hactoberfest.com) event, we wanted to have a leaderboard to track the contributions of the club members. We decided to use the [GitHub API](https://docs.github.com/en/rest) to fetch the contributions of the club members and display them on the website. Now how do we get the data for _all_ the users? We first tried using a single API key to get all the data but soon got heavily rate limited :upsidedown:. After further consideration we ended up developing a simple GitHub Actions workflow that each member could easily implement. This action fetched their statistics and sent them to our backend server which stores all this in [MongoDB](https://www.mongodb.com/).
 
@@ -70,8 +83,7 @@ Implementing search engine optimization was made much easier thanks to Astro. I 
 When developing the UI/UX design of our page, we wanted the user experience to feel as unique as possible. We touched in our strengths as a robotics club, leaning into a very techie design with interesting, engaging features. Additions such as the github leaderboard, our (literal) burger in the top left, the ever-changing wave background, and our amazing dark mode feature (highly reccomended). Our website is a demonstration of all of our personalities shining through to create this beautiful project.
 
 ## Conclusion
-- Sum up the key takeaways from each section.
-- A call-to-action, encouraging readers to explore the features discussed.
+We hope you enjoyed reading about our website as much as we enjoyed making it! If you have any questions, feel free to reach out to us on [Twitter](https://twitter.com/ieroboticsclub). We'd love to hear from you!
 
 
 
@@ -79,3 +91,12 @@ When developing the UI/UX design of our page, we wanted the user experience to f
 
 
 _Author(s): [@i-be-keggles](https://github.com/i-be-keggles), [@velocitatem](https://github.com/velocitatem), [@jose-izarra](https://github.com/jose-izarra), [@haxybaxy](https://github.com/haxybaxy)_
+
+<style>
+.katex {
+display: flex;
+align-items: center;
+text-align: center;
+}
+
+</style>
