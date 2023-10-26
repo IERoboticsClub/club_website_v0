@@ -13,12 +13,13 @@ The matrix-esque random character backgrounds were a theme we wanted to use prev
 The wave effect was achieved by layering sin waves on top of each other similar to how many water simulations are built. The function is as follows: for each column of characters going down the screen, the length of that string is defined as
 
 
-$$l + a \sin\left(\frac{x + d}{t}\right) + \sin\left(\frac{x + d/2}{1.5t}\right) \frac{a}{2} + \sin\left(\frac{x + d/3}{2t}\right) \frac{a}{2}$$
+$$tl + a \sin\left(\frac{x + d}{t}\right) + \sin\left(\frac{x + d/2}{1.5t}\right) \frac{a}{2} + \sin\left(\frac{x + d/3}{2t}\right) \frac{a}{2}$$
 
 
-where l is length, a is amplitude, p is period, d is offset, and x is the column.
+where tl is target length, a is amplitude, p is period, d is offset, and x is the column.
 The hardcoded values in the second and third sin functions are to add variation to the layers.
 To animate the wave, the offest, d, is increased over time to "scroll" the wave across the screen. For the wave to loop infinitely without needing to worry about errors with large numbers, the offset is also reset when it reaches the period of the entire length function, so that the wave can flow seamlessly and our variables are kept in a manageable range.
+Additionally, initial plans for the wave were to use it in multiple places, and the ability to vertically flip the wave was necessary for this dynamic use. To achieve this, we defined the length as $$l - y - tl + a$$ when we wanted to invert the wave, where y is the row.
 
 The word cloud is simpler. It's defined as two grids of characters, one has smaller cells and is used for the background, the other has larger cells and displays the words. The words are randomly positioned via a normal distribution. The function to define the area of the background is a simple eliptical radius, with the distance of the cell from the center (in the background grid) fed into the blur function. Said distance is in the range [0, 1] and calculate  with
 
