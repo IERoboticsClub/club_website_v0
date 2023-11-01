@@ -1,10 +1,9 @@
-
+---
+let theme = 'light';
+---
 
 <div class="fixed top-3 right-3 z-10 w-fit bg-transparent rounded-full">
-  <select name="themeSwitch" id="themeSwitch" class="bg-transparent text-xl">
-    <option value="dark" >🌙</option>
-    <option value="light">🔆</option>
-  </select>
+  <button id="themeSwitch" class="bg-transparent text-xl">{theme === 'dark' ? '🔆' : '🌙'}</button>
 </div>
 
 <style>
@@ -13,39 +12,37 @@
   }
 
   #themeSwitch {
-      font-family: 'Iosevka', monospace;
-      margin: 0;
-      padding: 0;
-      border-radius: 20px;
-      appearance: none;
-      width: fit-content;
-      padding: 5px 10px;
+    font-family: 'Iosevka', monospace;
+    margin: 0;
+    padding: 0;
+    border-radius: 20px;
+    appearance: none;
+    width: fit-content;
+    padding: 5px 10px;
   }
-select option {
-  text-align: center;
-}
-
 </style>
 
 <script>
-  const select = document.getElementById("themeSwitch") as HTMLSelectElement;
-  const theme = localStorage.getItem("theme");
-
-  select.value = theme || "light";
+  const button = document.getElementById('themeSwitch');
+  let currentTheme = window.localStorage.getItem('theme') || 'light';
 
   function updateTheme(value) {
-    const theme = value;
-
-    document.documentElement.classList.remove("light", "dark");
-    document.documentElement.classList.add(theme);
-    localStorage.setItem("theme", value);
-
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(value);
+    localStorage.setItem('theme', value);
   }
 
-  updateTheme(select.value);
+  updateTheme(currentTheme);
 
-  select.addEventListener("change", (event: Event) => {
-    const select = event.target as HTMLSelectElement;
-    updateTheme(select.value);
+  button.addEventListener('click', () => {
+    if (currentTheme === 'dark') {
+      button.innerHTML = '🌙';
+      updateTheme('light');
+      currentTheme = 'light';
+    } else {
+      button.innerHTML = '🔆';
+      updateTheme('dark');
+      currentTheme = 'dark';
+    }
   });
 </script>
