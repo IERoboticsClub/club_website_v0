@@ -6,39 +6,41 @@ interface Props {
 
 const { title } = Astro.props;
 const description = "Discover Robotics and Artificial Intelligence at our IE University Club. Explore the latest projects, workshops, and events in this exciting field."
+const webTitle = "IE Robotics and AI Club - Official Website"
+const url = Astro.url
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<SEO
-      title="IE Robotics and AI Club"
+      title={webTitle}
       description={description}
 	    charset="UTF-8"
-      
+
       openGraph={{
         basic: {
-          title: "IE Robotics and AI Club",
+          title: webTitle,
           type: "website",
-          image: "https://imgur.com/a/KdCaR8w", 
+          image:  url + "cover.png",
 		      url: "https://www.ieroboticsclub.com/"
         },
+        optional: { description: description }
       }
       }
-      openGraph.optional.description = {description}
       extend={{
         // extending the default link tags
-        link: [{ rel: "icon", href: "/favicon.svg" }],
+        link: [{ rel: "icon", href: url + "favicon.png" }],
         // extending the default meta tags
         meta: [
-		//normal stuff	
+        //normal stuff
         {name: "author", content: "IE Robotics and AI Club"},
-		{name: "viewport", content:"width=device-width"},
-		{name: "keywords", content: "AI, Robotics, IE University, Artificial Intelligence, Coding, Programming, AI Club, Robotics Society, University AI Projects, Robotics Research, Student AI Innovations, Machine Learning Enthusiasts, Robotics Workshops, AI Research Group, Innovation in Robotics, Artificial Intelligence Community, Student Robotics Competitions, AI and Robotics Collaboration, Future Tech Leaders, Robotics Engineering Club, AI Algorithms, Robotics Programming, Emerging Technologies, University Tech Enthusiasts, AI and Robotics Events, STEM Education, AI and Robotics Challenges, Tech Innovators, Autonomous Systems, Cutting-Edge Tech, Robotic Automation, Coding Enthusiasts, Programming Club, Code Development, Programming Workshops, Coding Challenges, Software Development, Coding Competitions, Programming Innovations, Coding Bootcamp, Tech Enthusiasts, Coding and Robotics, Tech Events, Code Learning, Computer Science Club."}
+        {name: "viewport", content:"width=device-width"},
+        {name: "keywords", content: "AI, Robotics, IE University, Artificial Intelligence, Coding, Programming, AI Club, Robotics Society, University AI Projects, Robotics Research, Student AI Innovations, Machine Learning Enthusiasts, Robotics Workshops, AI Research Group, Innovation in Robotics, Artificial Intelligence Community, Student Robotics Competitions, AI and Robotics Collaboration, Future Tech Leaders, Robotics Engineering Club, AI Algorithms, Robotics Programming, Emerging Technologies, University Tech Enthusiasts, AI and Robotics Events, STEM Education, AI and Robotics Challenges, Tech Innovators, Autonomous Systems, Cutting-Edge Tech, Robotic Automation, Coding Enthusiasts, Programming Club, Code Development, Programming Workshops, Coding Challenges, Software Development, Coding Competitions, Programming Innovations, Coding Bootcamp, Tech Enthusiasts, Coding and Robotics, Tech Events, Code Learning, Computer Science Club."}
 		,
 		{
             name: "twitter:image",
-            content: "https://imgur.com/a/KdCaR8w", 
+            content: url + "cover.png",
           },
           { name: "twitter:title", content: "IE Robotics and AI Club" },
           { name: "twitter:description", content: "Discover Robotics and Artificial Intelligence at our IE University Club. Explore the latest projects, workshops, and events in this exciting field." },
@@ -47,9 +49,8 @@ const description = "Discover Robotics and Artificial Intelligence at our IE Uni
     />
     <!-- Meta stuff for open graph -->
     <!-- <meta name="og:description" content={description} /> -->
- 
 
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" /> <!-- head icon -->
+
 		<meta name="generator" content={Astro.generator} />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Iosevka/6.0.0/iosevka/iosevka.min.css" integrity="sha512-3hU20586NsplKRzjf2jQN5vTRTI2EsXObrHDOBLGdkiRkneg699BlmBXWGHHFHADCF3TOk2BREsVy7qTkmvQqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<title>{title}</title>
@@ -76,7 +77,7 @@ const description = "Discover Robotics and Artificial Intelligence at our IE Uni
 		<slot />
 	</body>
 </html>
-<style> 
+<style>
 	html, body {
 	max-width: 100%;
 	overflow-x: hidden;
