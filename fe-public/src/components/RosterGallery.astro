@@ -7,7 +7,8 @@ const tempData = {
       "lastName": "Smith",
       "bio": "Full-stack developer with a keen interest in microservices architecture.",
       "github": "alicesmithcodes",
-      "linkedin": "alice-smith-tech"
+      "linkedin": "alice-smith-tech",
+      "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aGVhZHNob3R8ZW58MHx8MHx8fDA%3D"
     },
     {
       "email": "data.wizard@datasphere.com",
@@ -15,7 +16,8 @@ const tempData = {
       "lastName": "Johnson",
       "bio": "Data scientist specializing in machine learning and big data analytics.",
       "github": "bobjohnsondata",
-      "linkedin": "bob-johnson-data"
+      "linkedin": "bob-johnson-data",
+      "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aGVhZHNob3R8ZW58MHx8MHx8fDA%3D"
     },
     {
       "email": "ui.guru@designhub.com",
@@ -23,7 +25,8 @@ const tempData = {
       "lastName": "Williams",
       "bio": "UI/UX Designer dedicated to creating seamless and intuitive user experiences.",
       "github": "designcarol",
-      "linkedin": "carol-williams-design"
+      "linkedin": "carol-williams-design",
+      "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aGVhZHNob3R8ZW58MHx8MHx8fDA%3D"
     },
     {
       "email": "developer@techworld.com",
@@ -31,7 +34,8 @@ const tempData = {
       "lastName": "Smith",
       "bio": "Full-stack developer with a keen interest in microservices architecture.",
       "github": "alicesmithcodes",
-      "linkedin": "alice-smith-tech"
+      "linkedin": "alice-smith-tech",
+      "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aGVhZHNob3R8ZW58MHx8MHx8fDA%3D"
     },
     {
       "email": "data.wizard@datasphere.com",
@@ -39,7 +43,8 @@ const tempData = {
       "lastName": "Johnson",
       "bio": "Data scientist specializing in machine learning and big data analytics.",
       "github": "bobjohnsondata",
-      "linkedin": "bob-johnson-data"
+      "linkedin": "bob-johnson-data",
+      "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aGVhZHNob3R8ZW58MHx8MHx8fDA%3D"
     },
     {
       "email": "ui.guru@designhub.com",
@@ -47,25 +52,42 @@ const tempData = {
       "lastName": "Williams",
       "bio": "UI/UX Designer dedicated to creating seamless and intuitive user experiences.",
       "github": "designcarol",
-      "linkedin": "carol-williams-design"
+      "linkedin": "carol-williams-design",
+      "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aGVhZHNob3R8ZW58MHx8MHx8fDA%3D"
     }
   ]
 }
 ---
 
-<div class="carousel-container overflow-x-auto flex space-x-4 p-4 py-60">
-  {tempData.users.map((user) => (
-    <div class="carousel-item w-1/3 flex-none p-2 group">
-      <div class="user-card bg-white p-6 rounded-lg shadow-md transform transition hover:scale-110 hover:z-20">
-        <h3 class="text-lg font-semibold mb-1">{user.firstName} {user.lastName}</h3>
-        <p class="text-gray-600 text-sm mb-3">{user.bio}</p>
-        <div class="flex space-x-4">
-          <a href={`https://github.com/${user.github}`} class="text-blue-500 hover:text-blue-700">GitHub</a>
-          <a href={`https://linkedin.com/in/${user.linkedin}`} class="text-blue-500 hover:text-blue-700">LinkedIn</a>
-        </div>
-      </div>
-    </div>
-  ))}
+<div class="carousel-container overflow-x-auto mx-24 flex space-x-4 p-4 py-40">
+  <ul
+          role="list"
+          class="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3"
+        >
+          {tempData.users.map((user) => (
+            <li key={user.firstName} class="hover:shadow-lg hover:scale-[1.01] overflow-hidden rounded-2xl shadow-md user-card">
+              <img class="aspect-[3/2] w-full relative -top-5 object-top object-cover" src={user.image} alt="" />
+              <div class="pl-6">
+                <h3 class="mt-2 text-lg font-semibold leading-8 tracking-tight text-gray-900">{user.firstName} {user.lastName}</h3>
+              <p class="text-base leading-7 text-gray-600">{user.bio}</p>
+              <ul role="list" class="mt-2 flex gap-x-6 px-3 pb-3">
+                <li>
+                  <a href={user.github} class="text-gray-500 hover:text-gray-700">
+                    <span class="sr-only">Github</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                  </a>
+                </li>
+                <li>
+                  <a href={user.linkedin} class="text-gray-500 hover:text-gray-700">
+                    <span class="sr-only">LinkedIn</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                  </a>
+                </li>
+              </ul>
+              </div>
+            </li>
+          ))}
+        </ul>
 </div>
 
 <style>
