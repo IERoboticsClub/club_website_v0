@@ -4,6 +4,7 @@ module.exports.accounts = [
         method: 'GET',
         scope: 'public',
         handler: async (request, res) => {
+            // TODO Maybe we can add optinal requests to only get certain fields
             // Load the mongo connection
             let mongo = req.dependencies.mongo;
             try {
