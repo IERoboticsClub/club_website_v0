@@ -14,7 +14,7 @@ function loadProjects() {
         "email_address": "lcuellar.ieu2022@student.ie.edu",
         "project_name": "Luna: Dawn to Dusk",
         "description": "Luna is a virtual assistant that will help your start or end your day the best way! Create tailored playlists, keep track of your schedule, get the latest news and weather updates, and more - all with Luna!",
-        "video_demo_link": "https://drive.google.com/open?id=1GJHynrtvP20DPXdxuYkcvTO1hnOHgDfT",
+        "video_demo_link": "https://drive.google.com/file/d/1-ksU-Bu3IytEB8I9qDtpCF_aMzRSURYo/view?usp=drive_link",
         "cover_image_link": "",
         "progress_status": "5"
     },
