@@ -1,0 +1,43 @@
+---
+// Import the getProject function from your script
+import getProject from '../../scripts/load-projects.js';
+
+// Fetch the list of projects. Assuming getProject is an async function that returns project data.
+let projects;
+try {
+    projects = await getProject();
+} catch (error) {
+    console.error('Error fetching projects:', error);
+    projects = [];
+}
+---
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IE Robotics Club Projects</title>
+    <!-- Ensure you have Tailwind CSS included in your project -->
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+    <header class="bg-blue-800 text-white text-center p-6">
+        <h1 class="text-3xl font-bold">Our Projects</h1>
+    </header>
+
+    <section class="container mx-auto px-4 py-8">
+        {projects.map((project, index) => (
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6" key={index}>
+                <h2 class="text-xl font-bold text-blue-800 mb-2">{project.project_name}</h2>
+                <p class="mb-4">{project.description}</p>
+                {project.cover_image_link && (
+                    <img class="rounded-lg mb-4" src={project.cover_image_link} alt={`${project.project_name} cover image`} />
+                )}
+                <a class="text-blue-600 hover:underline" href={project.video_demo_link} target="_blank">Video Demo</a>
+                <p class="mt-4 font-semibold">Status: {project.progress_status}/10</p>
+            </div>
+        ))}
+    </section>
+
+</body>
+</html>
