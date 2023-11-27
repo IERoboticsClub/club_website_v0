@@ -1,5 +1,6 @@
 ---
 import { SEO } from "astro-seo";
+import DarkMode from "../components/DarkMode.astro";
 interface Props {
 	title: string;
 }
@@ -74,6 +75,7 @@ const url = "https://www.ieroboticsclub.com/"
   </script>
   <!-- End Matomo Tag Manager -->  <!-- Maybe import footer in layout instead -->
 	<body class="dark:bg-slate-900">
+    <DarkMode />
 		<slot />
 	</body>
 </html>
