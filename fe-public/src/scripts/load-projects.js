@@ -35,7 +35,17 @@ function loadProjects() {
         "video_demo_link": "https://drive.google.com/open?id=1wkDMy-8X-P8q4pSMpdqBLtJPGK7O7L40",
         "cover_image_link": "https://drive.google.com/open?id=1ko6O0M2D7lbYYpbJCf9L_v9rngV16M5q",
         "progress_status": "6"
+    },
+    {
+        "timestamp": "23/11/2023 15:35:59",
+        "email_address": "gorlando.ieu2022@student.ie.edu",
+        "project_name": "Botso the Robot Dog",
+        "description": "The man's best friend robot. A quadruped robot dog",
+        "video_demo_link": "https://drive.google.com/file/d/1JePXmyYm6fQMNS9O9hxXbaHs9tqG9BeC/view?usp=sharing",
+        "cover_image_link": "https://drive.google.com/file/d/1A8qc85fqSlxM9plDRisCuMOwnz2NbDXc/view?usp=sharing",
+        "progress_status": "5"
     }
+
 ]
 
 }
